@@ -1,8 +1,11 @@
 
 # [Insert App Name Here and Link to the deployed URL](https://www.heroku.com/)
-## [Insert Team Name Here]
+
+## Justice League
+
 ### Purpose and Functionality
-Describe the purpose and functionality of your application (~50 words) 
+
+We want to design a website to increase police accountability through increased citizen oversight of crime reports. We also want to allow citizens to be actively engaged in their local community safety. Using our website citizens would be able to filter different crimes by time, location, or type and easily visualize them on an interactive map. They’ll also be able to submit their own crime reports and comment on existing crime reports to share knowledge with other citizens.
 
 ### Instructions to Run Locally:
 In command line:
