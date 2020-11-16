@@ -4,36 +4,38 @@ let sqlDb;
 
 // name the columns of our tables for localization
 const columnNames = {
-  userId: "id",
-  userName: "name",
-  shortName: "shortName",
-  shortCreator: "creator",
-  shortURL: "url",
+  neighborhoodTableId: "id",
+  neighborhoodTableNeighborhood: "neighborhood",
+  crimeTableFileNumber: "fileNumber",
+  crimeTableReportDate: "reportDate",
+  crimeTableCrimeType: "crimeType",
+  crimeTableNeighborhoodId: "neighborhoodId"
 };
 Object.freeze(columnNames);
 
 function createDb() {
   console.log("created our db!");
-  sqlDb = new sqlite3.Database('shortdb.db', function() {
-    createUserTable();
-    createShortsTable();
+  sqlDb = new sqlite3.Database('crimedb.db', function() {
+    createNeighborhoodTable();
+    createCrimeTable();
   });
 };
 
-function createUserTable() {
-  sqlDb.run(`CREATE TABLE IF NOT EXISTS users (
-    ${columnNames.userId} INTEGER PRIMARY KEY AUTOINCREMENT,
-    ${columnNames.userName} TEXT NOT NULL UNIQUE
+function createNeighborhoodTable() {
+  sqlDb.run(`CREATE TABLE IF NOT EXISTS neighborhoods (
+    ${columnNames.neighborhoodTableId} INTEGER PRIMARY KEY,
+    ${columnNames.neighborhoodTableNeighborhood} TEXT NOT NULL UNIQUE
   )`);
 };
 
-function createShortsTable() {
-  sqlDb.run(`CREATE TABLE IF NOT EXISTS shorts (
-    ${columnNames.shortName} TEXT PRIMARY KEY,
-    ${columnNames.shortURL} TEXT NOT NULL,
-    ${columnNames.shortCreator} INTEGER NOT NULL,
-    FOREIGN KEY(${columnNames.shortCreator})
-    REFERENCES users(${columnNames.userId})
+function createCrimeTable() {
+  sqlDb.run(`CREATE TABLE IF NOT EXISTS crimes (
+    ${columnNames.crimeTableFileNumber} TEXT PRIMARY KEY,
+    ${columnNames.crimeTableReportDate} TEXT NOT NULL,
+    ${columnNames.crimeTableCrimeType} TEXT NOT NULL,
+    ${columnNames.crimeTableNeighborhoodId} INTEGER NOT NULL,
+    FOREIGN KEY(${columnNames.crimeTableNeighborhoodId})
+    REFERENCES neighborhoods(${columnNames.neighborhoodTableId})
   )`);
 };
 
