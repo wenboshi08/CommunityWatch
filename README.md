@@ -1,20 +1,27 @@
 
 # [Insert App Name Here and Link to the deployed URL](https://www.heroku.com/)
-## [Insert Team Name Here]
-### Purpose and Functionality
-Describe the purpose and functionality of your application (~50 words) 
 
-### Instructions to Run Locally:
-In command line:
-```console
-$ npm i
-$ npm run serve
+## Justice League
+
+### Purpose and Functionality
+
+We want to design a website to increase police accountability through increased citizen oversight of crime reports. We also want to allow citizens to be actively engaged in their local community safety. Using our website citizens would be able to filter different crimes by time, location, or type and easily visualize them on an interactive map. They’ll also be able to submit their own crime reports and comment on existing crime reports to share knowledge with other citizens.
+
+## Installation
 ```
-In a separate shell:
-```console
-$ npm start
+npm install
 ```
-then you will find the application at `localhost:8080` in the browser
+
+## Usage
+
+```
+npm run build
+npm run serve
+
+npm run awesome //in a separate terminal tab
+```
+Navigate to `localhost:8080` in your browser 
+
 
 ### Authorship:
 * **Alyssa P. Hacker**:
