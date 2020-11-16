@@ -1,7 +1,13 @@
 
 # [Insert App Name Here and Link to the deployed URL](https://www.heroku.com/)
+Team Justice League
 
-## Justice League
+# Community Watch
+
+<p align="center">
+  <img src="public/favicon.ico" width=300 />
+</p>
+
 
 ### Purpose and Functionality
 
