@@ -5,7 +5,22 @@
 
 ### Purpose and Functionality
 
-We want to design a website to increase police accountability through increased citizen oversight of crime reports. We also want to allow citizens to be actively engaged in their local community safety. Using our website citizens would be able to filter different crimes by time, location, or type and easily visualize them on an interactive map. They’ll also be able to submit their own crime reports and comment on existing crime reports to share knowledge with other citizens.
+We plan to build an application called Community Watch that allows the citizens of Cambridge to stay up to date on local crimes and engage in community discussion on crimes in neighborhoods as well. 
+
+#### Key Purposes: 
+
+- Provides a visual for citizens to understand crimes in neighborhoods
+An Interactive visual provides benefits like real-time filtering, interactive hoverability for crime statistics, etc. Citizens can now better make out crime patterns in particular neighborhoods by observing the geography of it easily. 
+Provides a platform for community discussion on crimes 
+
+
+- Citizens can now openly talk about crime with others in a safe space. This safe space is ensured by rules regarding flagging of posts and replies. Having the power to engage in community discussion on crime keeps the community well-informed on what community concerns are. 
+
+
+- Provides a personal feed for crimes for the neighborhoods you follow
+Users can follow certain neighborhoods to stay updated on the crimes in those neighborhoods and the community discussion relevant to those neighborhoods as well. This provides a more personal way of knowing what crimes and posts are relevant to you while filtering out the noise of other neighborhoods. 
+
+
 
 ## Installation
 ```
