@@ -7,9 +7,11 @@ const cors = require('cors');
 
 // import all the express routes we will be using
 const indexRouter = require('./routes/index');
-const shortsRouter = require('./routes/shorts');
-const usersRouter = require('./routes/users');
-const sessionRouter = require('./routes/session');
+const neighborhoodsRouter = require('./routes/neighborhoods');
+
+// const shortsRouter = require('./routes/shorts');
+// const usersRouter = require('./routes/users');
+// const sessionRouter = require('./routes/session');
 
 // create our app
 const app = express();
@@ -42,9 +44,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // connect url hierarchies to our routers
 app.use('/', indexRouter);
-app.use('/api/shorts', shortsRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/users/session', sessionRouter);
+app.use('/api/neighborhoods', neighborhoodsRouter);
+// app.use('/api/shorts', shortsRouter);
+// app.use('/api/users', usersRouter);
+// app.use('/api/users/session', sessionRouter);
 
 app.use('*', function (req, res) {
   res.redirect('/').end();

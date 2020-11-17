@@ -1,7 +1,8 @@
 <template>
   <div class="nav-bar">
     <div>
-      <router-link to="/account">
+      Community Watch app Navbar
+     <!--  <router-link to="/account">
         <div class="nav-icon-container">
           <img src="/images/minimize_icon.png"/>
         </div>
@@ -11,7 +12,7 @@
         <span v-else>
           Sign In/Sign Up
         </span>
-      </router-link>
+      </router-link> -->
     </div>
   </div>
 </template>
@@ -21,7 +22,7 @@ export default {
   name: "NavBar",
   data() {
     return {
-      userName: this.$cookie.get('url-shortener-auth')
+      
     }
   },
 };
