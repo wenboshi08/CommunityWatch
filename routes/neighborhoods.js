@@ -2,7 +2,6 @@ const express = require('express');
 
 const Neighborhoods = require('../models/Neighborhoods');
 const v = require('./validators');
-
 const router = express.Router();
 
 
