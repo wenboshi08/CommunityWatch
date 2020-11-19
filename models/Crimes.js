@@ -7,6 +7,7 @@ const db = require('../db/db_config');
  * @prop {string} reportDate        - date, as string    
  * @prop {integer} crimeTypeId      - type of crime id
  * @prop {integer} neighborhoodId   - neighborhoodId id
+ * @prop {string} location          - location of crime, as string
  */
 
 
@@ -25,7 +26,7 @@ class Crimes {
    * @return {string | undefined} - crime type
    */
   static async findCrimeTypeById(crimeTypeId) {
-    return db.get(`SELECT crimeType FROM crimetypes WHERE ${db.columnNames.id} = '${crimeTypeId}'`);
+    return db.get(`SELECT crimeType FROM crimetypes WHERE ${db.columnNames.crimetypesTableId} = '${crimeTypeId}'`);
   }
 
   /**
@@ -34,7 +35,7 @@ class Crimes {
    * @return {Crimes[]}
    */
   static async getAllCrimes() {
-    return db.all(`SELECT * FROM crimes`);
+    return db.all(`SELECT * FROM crimes LIMIT 20`);
   }
 
   /**

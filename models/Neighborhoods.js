@@ -20,10 +20,10 @@ class Neighborhoods {
    * Find a Neighborhood by id.
    * 
    * @param {Integer} neighborhoodId - id of Neighborhood to find
-   * @return {Short | undefined} - found Neighborhood
+   * @return {Neighborhood | undefined} - found Neighborhood
    */
   static async findOneById(neighborhoodId) {
-    return db.get(`SELECT * FROM neighborhoods WHERE ${db.columnNames.id} = '${neighborhoodId}'`);
+    return db.get(`SELECT * FROM neighborhoods WHERE ${db.columnNames.neighborhoodTableId} = '${neighborhoodId}'`);
   }
 
   /**

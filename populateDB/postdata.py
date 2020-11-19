@@ -9,8 +9,8 @@ conn = engine.connect()
 crimes = pd.read_csv('Crime_Reports.csv')
 # remove the crime record where Neighborhood is NaN
 cleaned_crimes = crimes.dropna()
-cleaned_crimes = cleaned_crimes[['File Number', 'Date of Report', 'Crime', 'Neighborhood']]
-cleaned_crimes.columns = ['fileNumber', 'reportDate', 'crimeType', 'neighborhoodName']
+cleaned_crimes = cleaned_crimes[['File Number', 'Date of Report', 'Crime', 'Neighborhood', 'Location']]
+cleaned_crimes.columns = ['fileNumber', 'reportDate', 'crimeType', 'neighborhoodName', 'location']
 CrimeType = cleaned_crimes['crimeType'].unique()
 CrimeType_index_dict = {}
 CrimeType_index_list = []
