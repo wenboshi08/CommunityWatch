@@ -11,7 +11,8 @@ const columnNames = {
   crimeTableFileNumber: "fileNumber",
   crimeTableReportDate: "reportDate",
   crimeTableCrimeTypeId: "crimeTypeId",
-  crimeTableNeighborhoodId: "neighborhoodId"
+  crimeTableNeighborhoodId: "neighborhoodId",
+  crimeTableLocation: "location",
 };
 Object.freeze(columnNames);
 
@@ -44,9 +45,10 @@ function createCrimeTable() {
     ${columnNames.crimeTableReportDate} TEXT NOT NULL,
     ${columnNames.crimeTableCrimeTypeId} INTEGER NOT NULL,
     ${columnNames.crimeTableNeighborhoodId} INTEGER NOT NULL,
+    ${columnNames.crimeTableLocation} TEXT NOT NULL,
     FOREIGN KEY(${columnNames.crimeTableNeighborhoodId})
     REFERENCES neighborhoods(${columnNames.neighborhoodTableId}),
-    FOREIGN KEY(${columnNames.crimeTableCrimeType})
+    FOREIGN KEY(${columnNames.crimeTableCrimeTypeId})
     REFERENCES crimetypes(${columnNames.crimetypesTableId})
   )`);
 };
