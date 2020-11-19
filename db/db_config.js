@@ -48,7 +48,7 @@ function createCrimeTable() {
     ${columnNames.crimeTableLocation} TEXT NOT NULL,
     FOREIGN KEY(${columnNames.crimeTableNeighborhoodId})
     REFERENCES neighborhoods(${columnNames.neighborhoodTableId}),
-    FOREIGN KEY(${columnNames.crimeTableCrimeType})
+    FOREIGN KEY(${columnNames.crimeTableCrimeTypeId})
     REFERENCES crimetypes(${columnNames.crimetypesTableId})
   )`);
 };
