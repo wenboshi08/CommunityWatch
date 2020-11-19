@@ -19,7 +19,7 @@ class Neighborhoods {
   /**
    * Find a Neighborhood by id.
    * 
-   * @param {Integer} neighborhoodName - id of Neighborhood to find
+   * @param {Integer} neighborhoodId - id of Neighborhood to find
    * @return {Short | undefined} - found Neighborhood
    */
   static async findOneById(neighborhoodId) {

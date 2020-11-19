@@ -6,9 +6,11 @@ let sqlDb;
 const columnNames = {
   neighborhoodTableId: "id",
   neighborhoodTableNeighborhood: "neighborhood",
+  crimetypesTableId: "id",
+  crimetypesTablecrime: "crimeType",
   crimeTableFileNumber: "fileNumber",
   crimeTableReportDate: "reportDate",
-  crimeTableCrimeType: "crimeType",
+  crimeTableCrimeTypeId: "crimeTypeId",
   crimeTableNeighborhoodId: "neighborhoodId"
 };
 Object.freeze(columnNames);
@@ -17,6 +19,7 @@ function createDb() {
   console.log("created our db!");
   sqlDb = new sqlite3.Database('crimedb.db', function() {
     createNeighborhoodTable();
+    createCrimeTypesTable();
     createCrimeTable();
   });
 };
@@ -28,14 +31,23 @@ function createNeighborhoodTable() {
   )`);
 };
 
+function createCrimeTypesTable() {
+  sqlDb.run(`CREATE TABLE IF NOT EXISTS crimetypes (
+    ${columnNames.crimetypesTableId} INTEGER PRIMARY KEY,
+    ${columnNames.crimetypesTablecrime} TEXT NOT NULL UNIQUE
+  )`);
+};
+
 function createCrimeTable() {
   sqlDb.run(`CREATE TABLE IF NOT EXISTS crimes (
     ${columnNames.crimeTableFileNumber} TEXT PRIMARY KEY,
     ${columnNames.crimeTableReportDate} TEXT NOT NULL,
-    ${columnNames.crimeTableCrimeType} TEXT NOT NULL,
+    ${columnNames.crimeTableCrimeTypeId} INTEGER NOT NULL,
     ${columnNames.crimeTableNeighborhoodId} INTEGER NOT NULL,
     FOREIGN KEY(${columnNames.crimeTableNeighborhoodId})
-    REFERENCES neighborhoods(${columnNames.neighborhoodTableId})
+    REFERENCES neighborhoods(${columnNames.neighborhoodTableId}),
+    FOREIGN KEY(${columnNames.crimeTableCrimeType})
+    REFERENCES crimetypes(${columnNames.crimetypesTableId})
   )`);
 };
 
