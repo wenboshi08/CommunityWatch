@@ -56,20 +56,11 @@ Navigate to `localhost:8080` in your browser
   * routes:
     * neighborhoods.js
 
-* **Ben Bitdiddle**:
-  * src
-    * HomePage.vue
-    * Test.vue
-  * models:
-    * Model1.js
-    * Model2.js
-    * Users.js
-  * routes:
-    * route1.js
-    * route2.js
-    * users.js
-    * index.js
-  * Boilerplate code (main.js, babel.config.js, router.js, etc.)
+* **Wenbo Shi**:
+  * populateDB
+    * postdata.py
+  * db
+    * db_config.js
 * **Melon Usk**:
   * src
     * HomePage.vue
