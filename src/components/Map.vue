@@ -7,7 +7,8 @@
       <div v-if="error" class="error-message">
         {{ error }}
       </div>
-      <div class="map-container" id="map-container" v-if="crimes.length">
+      <div class="container">
+        <div id="map-container"></div>
         <!-- <div v-if="crimes.length">
           <google-map
             :center="center"
@@ -29,95 +30,171 @@
   </div>
 </template>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlSCDlDz-SOG0h9L0sSogIxcNhznag1Lg" async defer></script>
+
+    
 <script>
 import axios from "axios";
-import Vue from "vue";
-import * as VueGoogleMaps from "vue2-google-maps";
-import { Loader } from "google-maps";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import icon from "leaflet/dist/images/marker-icon.png";
+import iconShadow from "leaflet/dist/images/marker-shadow.png";
+// import data from "../../test-data.geojson";
+// import LeafletHeatmap from "./LeafletHeatmap";
+// import Vue from "vue";
+// import * as VueGoogleMaps from "vue2-google-maps";
+// import { Loader } from "google-maps";
 
-Vue.use(VueGoogleMaps, {
-  installComponents: true,
-  load: {
-    key: "AIzaSyAlSCDlDz-SOG0h9L0sSogIxcNhznag1Lg",
-    libraries: "places",
-  },
-});
+// import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
 
-Vue.filter("json", (x) => JSON.stringify(x));
+// Vue.use(VueGoogleMaps, {
+//   installComponents: true,
+//   load: {
+//     key: "AIzaSyAlSCDlDz-SOG0h9L0sSogIxcNhznag1Lg",
+//     libraries: "places",
+//   },
+// });
+
+// Vue.filter("json", (x) => JSON.stringify(x));
 
 // import { eventBus } from "../main";
 
 export default {
   name: "Map",
+  components: {},
   data() {
     return {
       error: "",
       success: "",
       crimes: [],
+      center: [-71.1097, 42.3736],
     };
   },
 
   created: function () {},
 
   mounted: function () {
-    this.loadCrimes();
+    // this.loadCrimes();
+    this.setupLeafletMap();
   },
 
   methods: {
-    geoCodeAddress: async function (address, geocoder) {
-      geocoder.geocode({ address: address }, (results, status) => {
-        if (status === "OK") {
-          //   map.setCenter(results[0].geometry.location);
-          //   let marker = new google.maps.Marker(
-          //       {  position: results[0].geometry.location,
-          //       });
-          return results[0].geometry.location;
-        } else {
-          console.log(
-            "Geocode was not successful for the following reason: " + status
-          );
-        }
+    geoCodeAddress: async function () {},
+    onEachFeature(feature, layer) {
+      if (feature.properties && feature.properties.crimeType) {
+        layer.bindPopup(feature.properties.crimeType);
+        layer.on("mouseover", () => {
+          layer.openPopup();
+        });
+        layer.on("mouseout", () => {
+          layer.closePopup();
+        });
+      }
+    },
+    setupLeafletMap: function () {
+      const mapDiv = L.map("map-container").setView(
+        [42.37369292702129, -71.11050691418987],
+        13
+      );
+      let DefaultIcon = L.icon({
+        iconUrl: icon,
+        shadowUrl: iconShadow,
       });
+
+      L.Marker.prototype.options.icon = DefaultIcon;
+      L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+        {
+          attribution: "© OpenStreetMap",
+          maxZoom: 18,
+          id: "mapbox/streets-v11",
+          accessToken:
+            "pk.eyJ1Ijoic3Zpc2h3YWIiLCJhIjoiY2tocGViOTF4MGl3ZTJzcDY5a2x0cDg4bSJ9.zu75vUX-kDvcReosDGWP1w",
+        }
+      ).addTo(mapDiv);
+      let data = {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            properties: {
+              crimeType: "AutoTheft",
+              fileNumber: "2009-00217",
+              location: "100 CHURCH ST, Cambridge, MA",
+              neighborhoodId: 1,
+              reportDate: "2009-01-08T20:53:00Z",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [-71.1214574, 42.3739487],
+            },
+          },
+          {
+            type: "Feature",
+            properties: {
+              crimeType: "Hit and Run",
+              fileNumber: "2009-00219",
+              location: "0 BLAKESLEE ST, Cambridge, MA",
+              neighborhoodId: 1,
+              reportDate: "2009-01-08T22:02:00Z",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [-71.13506269999999, 42.3809522],
+            },
+          },
+          {
+            type: "Feature",
+            properties: {
+              crimeType: "Shoplifting",
+              fileNumber: "2009-00233",
+              location: "0 WHITE ST, Cambridge, MA",
+              neighborhoodId: 2,
+              reportDate: "2009-01-09T15:02:00Z",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [-71.11737410000001, 42.3894396],
+            },
+          },
+          {
+            type: "Feature",
+            properties: {
+              crimeType: "Larceny from MV",
+              fileNumber: "2009-00241",
+              location: "300 VASSAR ST, Cambridge, MA",
+              neighborhoodId: 3,
+              reportDate: "2009-01-09T19:22:00Z",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [-71.1041173, 42.3555879],
+            },
+          },
+        ],
+      };
+      let jsonData = JSON.stringify(data);
+      L.geoJson(JSON.parse(jsonData), {
+        onEachFeature: this.onEachFeature,
+      }).addTo(mapDiv);
     },
     loadCrimes: async function () {
-      let google;
-      let map;
       axios
         .get("/api/crimes/")
         .then((response) => {
           this.crimes = response.data;
         })
         .then(() => {
-          const options = {
-            /* todo */
-          };
-          const loader = new Loader(
-            "AIzaSyAlSCDlDz-SOG0h9L0sSogIxcNhznag1Lg",
-            options
-          );
-          google = loader.load();
-        })
-        .then(() => {
-          map = new google.maps.Map(document.getElementById("map-container"), {
-            center: { lat: 42.3736, lng: 71.1097 },
-            zoom: 8,
-          });
-        })
-        .then(() => {
-          let geocoder = new google.maps.Geocoder();
-          this.crimes.map((crime) => {
-            let position = geoCodeAddress(crime.location, geocoder);
+          this.crimes = this.crimes.map((crime) => {
+            // let position = geoCodeAddress(crime.location);
             return {
               fileNumber: crime.fileNumber,
               reportDate: crime.reportDate,
               crimeType: crime.crimeType,
               neighborhood: crime.neighborhood,
               location: crime.location,
-              position: position,
+              position: crime.location,
             };
           });
-          console.log(this.crimes);
         });
     },
 
@@ -130,3 +207,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#map-container {
+  width: 800px;
+  height: 600px;
+  margin: 40px;
+}
+</style>
