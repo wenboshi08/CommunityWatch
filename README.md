@@ -2,8 +2,6 @@
 # [Community Watch](https://communitywatch.herokuapp.com/)
 Team Justice League
 
-# Community Watch
-
 <p align="center">
   <img src="public/favicon.ico" width=300 />
 </p>
