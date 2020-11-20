@@ -30,34 +30,32 @@ Users can follow certain neighborhoods to stay updated on the crimes in those ne
 
 ## Installation
 ```
-npm install
+sudo npm install
 ```
 
 ## Usage
 
 ```
-npm run build
-npm run serve
+sudo npm run build
+sudo npm run serve
 
-npm run awesome //in a separate terminal tab
+sudo npm run awesome //in a separate terminal tab
 ```
 Navigate to `localhost:8080` in your browser 
 
 
 ### Authorship:
-* **Alyssa P. Hacker**:
+* **Sanja Simonovikj**:
+  * initial Vue setup
   * src
-    * HomePage.vue
-    * Test.vue
+    * components/NeighborhoodList.vue
+    * components/NeighborhoodListItem.vue
+    * components/Navbar.vue
   * models:
-    * Model1.js
-    * Model2.js
-    * Users.js
+    * Neighborhoods.js
   * routes:
-    * route1.js
-    * route2.js
-    * users.js
-    * index.js
+    * neighborhoods.js
+
 * **Ben Bitdiddle**:
   * src
     * HomePage.vue
