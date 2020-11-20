@@ -72,7 +72,7 @@ export default {
   created: function () {},
 
   mounted: function () {
-    this.loadCrimes();
+    // this.loadCrimes();
     this.setupLeafletMap();
   },
 
