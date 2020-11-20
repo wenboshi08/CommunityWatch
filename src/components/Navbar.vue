@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar">
     <div>
-      Community Watch app Navbar
+      <b>Community Watch</b> 
      <!--  <router-link to="/account">
         <div class="nav-icon-container">
           <img src="/images/minimize_icon.png"/>

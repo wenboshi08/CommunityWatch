@@ -26,36 +26,36 @@ router.get(
 });
 
 
-// /**
-//  * Get a particular neighborhood by id
-//  * 
-//  * @name GET /api/neighborhoods/:id
-//  * :name is the id of the neighborhood
-//  * @return {Neighborhood} - the resulting neighborhood
-//  * @throws {404} - if neighborhood does not exist
-//  */
-// router.get(
-//   '/:id', 
-//   [
-//     v.ensureValidNeighborhoodIdInBody,
-//   ],
-//   async (req, res) => {
-//   try {
+/**
+ * Get a particular neighborhood by id
+ * 
+ * @name GET /api/neighborhoods/:id
+ * :name is the id of the neighborhood
+ * @return {Neighborhood} - the resulting neighborhood
+ * @throws {404} - if neighborhood does not exist
+ */
+router.get(
+  '/:id', 
+  [
+    v.ensureValidNeighborhoodIdInBody,
+  ],
+  async (req, res) => {
+  try {
 
-//     const neighborhoodId = req.params.id;
+    const neighborhoodId = req.params.id;
 
-//     // ensure that the given neighborhood exists in our DB
-//     const neighborhood = await Neighborhoods.findOneById(neighborhoodId);
-//     if (!neighborhood) {
-//       res.status(404).json({
-//         error: `Neighborhood with id ${neighborhoodId} does not exist`,
-//       }).end();
-//       return;
-//     }
-//   } catch (error) {
-//     res.status(503).json({ error: `Could not retrieve the neighborhood: ${error}` }).end();
-//   }
-// });
+    // ensure that the given neighborhood exists in our DB
+    const neighborhood = await Neighborhoods.findOneById(neighborhoodId);
+    if (!neighborhood) {
+      res.status(404).json({
+        error: `Neighborhood with id ${neighborhoodId} does not exist`,
+      }).end();
+      return;
+    }
+  } catch (error) {
+    res.status(503).json({ error: `Could not retrieve the neighborhood: ${error}` }).end();
+  }
+});
 
 
 module.exports = router;
