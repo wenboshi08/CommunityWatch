@@ -1,8 +1,6 @@
 
-# [Insert App Name Here and Link to the deployed URL](https://www.heroku.com/)
+# [Community Watch](https://communitywatch.herokuapp.com/)
 Team Justice League
-
-# Community Watch
 
 <p align="center">
   <img src="public/favicon.ico" width=300 />
@@ -30,48 +28,37 @@ Users can follow certain neighborhoods to stay updated on the crimes in those ne
 
 ## Installation
 ```
-npm install
+sudo npm install
 ```
 
 ## Usage
 
 ```
-npm run build
-npm run serve
+sudo npm run build
+sudo npm run serve
 
-npm run awesome //in a separate terminal tab
+sudo npm run awesome //in a separate terminal tab
 ```
 Navigate to `localhost:8080` in your browser 
 
 
 ### Authorship:
-* **Alyssa P. Hacker**:
+* **Sanja Simonovikj**:
+  * initial Vue setup
   * src
-    * HomePage.vue
-    * Test.vue
+    * components/NeighborhoodList.vue
+    * components/NeighborhoodListItem.vue
+    * components/Navbar.vue
   * models:
-    * Model1.js
-    * Model2.js
-    * Users.js
+    * Neighborhoods.js
   * routes:
-    * route1.js
-    * route2.js
-    * users.js
-    * index.js
-* **Ben Bitdiddle**:
-  * src
-    * HomePage.vue
-    * Test.vue
-  * models:
-    * Model1.js
-    * Model2.js
-    * Users.js
-  * routes:
-    * route1.js
-    * route2.js
-    * users.js
-    * index.js
-  * Boilerplate code (main.js, babel.config.js, router.js, etc.)
+    * neighborhoods.js
+
+* **Wenbo Shi**:
+  * populateDB
+    * postdata.py
+  * db
+    * db_config.js
 * **Melon Usk**:
   * src
     * HomePage.vue
