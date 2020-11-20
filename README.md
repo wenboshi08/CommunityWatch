@@ -59,19 +59,16 @@ Navigate to `localhost:8080` in your browser
     * postdata.py
   * db
     * db_config.js
-* **Melon Usk**:
+* **Stuti Vishwabhan**:
   * src
-    * HomePage.vue
-    * Test.vue
-  * models:
-    * Model1.js
-    * Model2.js
-    * Users.js
+    * components/Map.vue
+    * components/CrimeList.vue
+    * components/CrimeListItem.vue
+    * components/Main.vue
+  * db:
+    * db_config.js
   * routes:
-    * route1.js
-    * route2.js
-    * users.js
-    * index.js
+    * crimes.js
 * **Gill Bates**:
   * src
     * HomePage.vue
