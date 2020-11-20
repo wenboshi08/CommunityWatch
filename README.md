@@ -69,17 +69,11 @@ Navigate to `localhost:8080` in your browser
     * db_config.js
   * routes:
     * crimes.js
-* **Gill Bates**:
+* **Fernando Herrera**:
   * src
-    * HomePage.vue
-    * Test.vue
+    * components/CrimeList.vue
+    * components/CrimeListItem.vue
   * models:
-    * Model1.js
-    * Model2.js
-    * Users.js
+    * Crime.js
   * routes:
-    * route1.js
-    * route2.js
-    * users.js
-    * index.js
-  * App.vue/router.js
+    * crimes.js
