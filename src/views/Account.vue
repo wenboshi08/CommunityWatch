@@ -1,7 +1,8 @@
 <template>
   <div>
+	Hi
 <!--     <ShortenerTitle/>
-    <UserSettings/> -->
+	<UserSettings/> -->
   </div>
 </template>
 
@@ -12,8 +13,8 @@
 export default {
   name: "account",
   components: {
-    // UserSettings,
-    // ShortenerTitle
+	// UserSettings,
+	// ShortenerTitle
   }
 };
 </script>

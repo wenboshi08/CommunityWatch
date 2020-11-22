@@ -1,19 +1,17 @@
 <template>
   <div class="nav-bar">
     <div>
+      <b-navbar-item tag="router-link" :to="{path: '/'}"></b-navbar-item>
       <b>Community Watch</b> 
-     <!--  <router-link to="/account">
-        <div class="nav-icon-container">
-          <img src="/images/minimize_icon.png"/>
-        </div>
-        <span v-if="userName">
-          Hi {{userName}}!
-        </span>
-        <span v-else>
-          Sign In/Sign Up
-        </span>
-      </router-link> -->
+     <b-navbar-item tag="router-link" :to="{ path: '/account' }">
+               <font-awesome-icon 
+                icon="user" 
+                size="2x" >
+          </font-awesome-icon>
+
+        </b-navbar-item>
     </div>
+
   </div>
 </template>
 
@@ -29,6 +27,9 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 .nav-icon-container {
     width: 20px;
     height: 20px;

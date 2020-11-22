@@ -12,8 +12,12 @@
   },
   "dependencies": {
     "axios": "^0.18.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/vue-fontawesome": "^2.0.0",
     "connect-history-api-fallback": "^1.6.0",
     "cookie-parser": "~1.4.3",
+    "buefy": "^0.9.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
