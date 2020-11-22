@@ -10,6 +10,8 @@ const history = require('connect-history-api-fallback');
 
 
 // import all the express routes we will be using
+const usersRouter = require('./routes/users');
+const sessionRouter = require('./routes/session');
 const indexRouter = require('./routes/index');
 const neighborhoodsRouter = require('./routes/neighborhoods');
 const crimesRouter = require('./routes/crimes');
@@ -51,11 +53,10 @@ app.use(express.static(path.join(__dirname, isProduction ? 'dist' : 'public')));
 
 // connect url hierarchies to our routers
 app.use('/', indexRouter);
+app.use('/api/users', usersRouter);
 app.use('/api/neighborhoods', neighborhoodsRouter);
 app.use('/api/crimes', crimesRouter);
-// app.use('/api/shorts', shortsRouter);
-// app.use('/api/users', usersRouter);
-// app.use('/api/users/session', sessionRouter);
+app.use('/api/users/session', sessionRouter);
 
 app.use('*', function (req, res) {
   res.redirect('/').end();
