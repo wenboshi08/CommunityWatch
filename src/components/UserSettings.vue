@@ -1,7 +1,9 @@
 <template>
   <div id="user-settings">
     <div v-if="isSignedIn" class="form-container">
-      <SignOut/>
+
+      <UserProfile/>
+
     </div>
     <div v-else class="form-container">
       <SignIn/>
@@ -17,6 +19,8 @@
 import SignIn from "./SignIn.vue";
 import SignOut from "./SignOut.vue";
 import SignUp from "./SignUp.vue";
+import UserProfile from "./UserProfile.vue";
+
 import { eventBus } from "../main";
 
 export default {
@@ -24,8 +28,10 @@ export default {
 
   components: {
     SignIn,
-    SignOut,
-    SignUp
+    SignOut,  
+    SignUp,
+    UserProfile,
+
   },
 
   data() {
@@ -36,20 +42,20 @@ export default {
   },
 
   created: function() {
-    let authenticated = this.$cookie.get('url-shortener-auth');
+    let authenticated = this.$cookie.get('commwatch-auth');
     if (authenticated) {
       this.isSignedIn = true;
     }
 
     eventBus.$on("signin-success", (userName) => {
-      this.$cookie.set('url-shortener-auth', userName);
+      this.$cookie.set('commwatch-auth', userName);
       this.isSignedIn = true;
       this.messages.push("You have been signed in!");
       this.clearMessages();
     });
     
     eventBus.$on("signout-success", () => {
-      this.$cookie.set('url-shortener-auth', '');
+      this.$cookie.set('commwatch-auth', '');
       this.isSignedIn = false;
       this.messages.push("You have been signed out!");
       this.clearMessages();

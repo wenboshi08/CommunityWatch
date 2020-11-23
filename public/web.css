@@ -11,14 +11,25 @@ a:visited {
   color: var(--main-color);
   text-align: center;
 }
-
+/*
 .nav-bar {
-  font-size: 2em;
+  font-size: 3em;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
 
+  
+}*/
+
+.navbar-menu {
+  background-color: #ebf5ee;
+  min-height: 50px;
+
+}
+.navbar-item{
+  font-size: 1.3em;
+
+}
 .component {
   align-items: center;
   margin-bottom: 5%;
@@ -106,4 +117,20 @@ a:visited {
 
 .neighborhood-name, .crime-name {
   font-size: 2em;
+}
+
+.danger{
+  border: 2px solid  #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.delete-account {
+  background-color:  #eb8f8f;
+  border-radius: 10px;
+  font-style: bold;
+  color:  black;
+  border: 2px solid  #dbf6e9;
+  margin: 1%;
 }

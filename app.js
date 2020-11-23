@@ -15,8 +15,8 @@ const neighborhoodsRouter = require('./routes/neighborhoods');
 const crimesRouter = require('./routes/crimes');
 
 // const shortsRouter = require('./routes/shorts');
-// const usersRouter = require('./routes/users');
-// const sessionRouter = require('./routes/session');
+const usersRouter = require('./routes/users');
+const sessionRouter = require('./routes/session');
 
 // create our app
 const app = express();
@@ -54,11 +54,11 @@ app.use('/', indexRouter);
 app.use('/api/neighborhoods', neighborhoodsRouter);
 app.use('/api/crimes', crimesRouter);
 // app.use('/api/shorts', shortsRouter);
-// app.use('/api/users', usersRouter);
-// app.use('/api/users/session', sessionRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/users/session', sessionRouter);
 
 app.use('*', function (req, res) {
-  res.redirect('/').end();
+  res.redirect('/');//.end();
 });
 
 console.log("Running on localhost:3000...");

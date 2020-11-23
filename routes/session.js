@@ -1,6 +1,7 @@
 const express = require('express');
 
 const Users = require('../models/Users');
+
 const v = require('./validators');
 
 const router = express.Router();
@@ -19,11 +20,11 @@ router.post(
   async (req, res) => {
   try {
     // fetch the user from the DB
-    let user = await Users.findOne(req.body.username);
+    let user = await Users.findOne(req.body.username, req.body.password);
     
     // must find user in the DB
     if (!user) {
-      res.status(404).json({ error: `Could not find user ${req.body.username}` }).end();
+      res.status(404).json({ error: `Could not find a user with the given username/password combination`}).end();
       return;
     }
     
@@ -47,6 +48,7 @@ router.delete(
   async (req, res) => {
   try {
     // sign out user
+    console.log("signing out user");
     req.session.uid = undefined;
     res.status(200).json({ message: "Successfuly signed out user!" }).end();
 

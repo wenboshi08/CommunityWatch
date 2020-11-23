@@ -1,6 +1,6 @@
 <template>
-  <div id="sign-out" class="component">
-    <button v-on:click="signOut">Sign Out</button>
+  <div id="sign-out" >
+    <button class="button is-light" v-on:click="signOut" >Sign Out</button>
   </div>
 </template>
 
@@ -23,6 +23,15 @@ export default {
           eventBus.$emit('signout-success', true);
         })
     }
-  }
+  },
+
+  mounted: function() {
+    eventBus.$on('trigger-signout',  () => {this.signOut();});
+    
+  },
+
+  beforeDestroy() {
+    eventBus.$off('trigger-signout');
+   },
 }
 </script>
