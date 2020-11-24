@@ -102,10 +102,25 @@ const ensureValidPasswordInBody = function(req, res, next) {
   next();
 };
 
+// ------------------------------ Params
+const ensureValidNeighborhoodIdInParams = function(req, res, next) {
+  if (!req.params.neighborhoodid) {
+    res.status(400).json({ error: "You must specify a valid neighborhoodId in the params" }).end();
+    return;
+  }
+  next();
+};
 
-
+const ensureValidUserIdInParams = function(req, res, next) {
+  if (!req.params.userid) {
+    res.status(400).json({ error: "You must specify a valid userId in the params" }).end();
+    return;
+  }
+  next();
+};
 
 // ------------------------------ AUTH
+
 
 
 
@@ -115,6 +130,8 @@ module.exports = {
   ensureUserLoggedIn,
   ensureValidUsernameInBody,
   ensureValidPasswordInBody,
+  ensureValidNeighborhoodIdInParams,
+  ensureValidUserIdInParams,
 
 };
 

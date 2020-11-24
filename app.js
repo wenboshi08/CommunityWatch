@@ -13,6 +13,7 @@ const history = require('connect-history-api-fallback');
 const indexRouter = require('./routes/index');
 const neighborhoodsRouter = require('./routes/neighborhoods');
 const crimesRouter = require('./routes/crimes');
+const feedsRouter = require('./routes/feeds');
 
 // const shortsRouter = require('./routes/shorts');
 const usersRouter = require('./routes/users');
@@ -53,6 +54,7 @@ app.use(express.static(path.join(__dirname, isProduction ? 'dist' : 'public')));
 app.use('/', indexRouter);
 app.use('/api/neighborhoods', neighborhoodsRouter);
 app.use('/api/crimes', crimesRouter);
+app.use('/api/feeds', feedsRouter);
 // app.use('/api/shorts', shortsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/users/session', sessionRouter);

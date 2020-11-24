@@ -16,6 +16,8 @@ const columnNames = {
   crimeTableCrimeTypeId: "crimeTypeId",
   crimeTableNeighborhoodId: "neighborhoodId",
   crimeTableLocation: "location",
+  feedTableUserId: "userId",
+  feedTableNeighborhoodId: "neighborhoodId",
 };
 Object.freeze(columnNames);
 
@@ -26,6 +28,7 @@ function createDb() {
     createNeighborhoodTable();
     createCrimeTypesTable();
     createCrimeTable();
+    createFeedTable();
   });
 };
 
@@ -62,6 +65,18 @@ function createCrimeTable() {
     REFERENCES neighborhoods(${columnNames.neighborhoodTableId}),
     FOREIGN KEY(${columnNames.crimeTableCrimeTypeId})
     REFERENCES crimetypes(${columnNames.crimetypesTableId})
+  )`);
+};
+
+function createFeedTable() {
+  sqlDb.run(`CREATE TABLE IF NOT EXISTS feeds (
+    ${columnNames.feedTableUserId} INTEGER NOT NULL,
+    ${columnNames.feedTableNeighborhoodId} INTEGER NOT NULL,
+    FOREIGN KEY(${columnNames.feedTableUserId})
+    REFERENCES users(${columnNames.userId}),
+    FOREIGN KEY(${columnNames.feedTableNeighborhoodId})
+    REFERENCES neighborhoods(${columnNames.neighborhoodTableId}),
+    PRIMARY KEY (${columnNames.feedTableUserId}, ${columnNames.feedTableNeighborhoodId})
   )`);
 };
 
