@@ -30,12 +30,11 @@
   </div>
 </template>
 
-
-    
 <script>
 import axios from "axios";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import mapquest from "mapquest";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 // import data from "../../test-data.geojson";
@@ -78,8 +77,24 @@ export default {
   },
 
   methods: {
-    geoCodeAddress: async function () {},
-    onEachFeature(feature, layer) {
+    geoCodeAddress: async (location, fn) => {
+      //   mapquest.geocode()
+      //     .search(location)
+      //     .on("success", function (e) {
+      //       console.log(e);
+      //     });
+      //   console.log(location);
+      return mapquest.geocode(
+        {
+          address: [location],
+          key: "gX72Jyp1H1l0fIoGb06xGY6yJ9h6KMN1",
+        },
+        function (err, result) {
+          fn([result.displayLatLng.lng, result.displayLatLng.lat]);
+        }
+      );
+    },
+    onEachFeature: (feature, layer) => {
       if (feature.properties && feature.properties.crimeType) {
         layer.bindPopup(feature.properties.crimeType);
         layer.on("mouseover", () => {
@@ -177,23 +192,44 @@ export default {
         onEachFeature: this.onEachFeature,
       }).addTo(mapDiv);
     },
+    resolveCrimePromise: async function (crime) {
+      let coord;
+      await this.geoCodeAddress(crime.location, function (result) {
+        coord = result;
+      });
+
+      // wait for coord to to be assigned to result in callback
+      // before i return object below that references coord in
+      // the geometry.coordinates field
+      return {
+        type: "Feature",
+        properties: {
+          fileNumber: crime.fileNumber,
+          reportDate: crime.reportDate,
+          crimeType: crime.crimeType,
+          neighborhood: crime.neighborhood,
+          location: crime.location,
+        },
+        geometry: {
+          type: "Point",
+          coordinates: coord,
+        },
+      };
+    },
     loadCrimes: async function () {
+      let crimeData;
       axios
         .get("/api/crimes/")
         .then((response) => {
-          this.crimes = response.data;
+          crimeData = response.data;
         })
         .then(() => {
-          this.crimes = this.crimes.map((crime) => {
-            // let position = geoCodeAddress(crime.location);
-            return {
-              fileNumber: crime.fileNumber,
-              reportDate: crime.reportDate,
-              crimeType: crime.crimeType,
-              neighborhood: crime.neighborhood,
-              location: crime.location,
-              position: crime.location,
-            };
+          let promises = crimeData.map((crime) => {
+            return this.resolveCrimePromise(crime);
+          });
+          Promise.all(promises).then((results) => {
+            crimeData = results;
+            console.log(results);
           });
         });
     },

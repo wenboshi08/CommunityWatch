@@ -24,9 +24,11 @@ router.get(
       let crimeType = await Crimes.findCrimeTypeById(crime.crimeTypeId); 
       let neighborhood = await Neighborhoods.findOneById(crime.neighborhoodId); 
       return ({
+        crimeTypeId: crime.crimeTypeId, 
         crimeType: crimeType.crimeType,
         fileNumber: crime.fileNumber,
         location: crime.location,
+        neighborhoodId: crime.neighborhoodId, 
         neighborhood: neighborhood.neighborhood, 
         reportDate: crime.reportDate,
       });
