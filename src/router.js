@@ -15,6 +15,11 @@ export default new Router({
       path: '/account',
       name: 'account',
       component: () => import('./views/Account.vue')
+    },
+    {
+      path: '/myneighborhood',
+      name: 'MyNeighborhood',
+      component: () => import('./views/MyNeighborhood.vue')
     }
   ]
 })
