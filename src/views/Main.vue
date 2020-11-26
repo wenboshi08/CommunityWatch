@@ -1,11 +1,11 @@
 <template>
   <div>
     <Navbar />
-    <div class="main">
+    <div class="main h-auto">
       <!--  <CreateShortForm/>
       <ShortList/> -->
       <Map />
-      <NeighborhoodList />
+      <Feed />
     </div>
     <div>
       <CrimeList />
@@ -16,6 +16,7 @@
 <script>
 // import CreateShortForm from "../components/CreateShortForm.vue";
 // import ShortList from "../components/ShortList.vue";
+import Feed from "../components/Feed.vue";
 import NeighborhoodList from "../components/NeighborhoodList.vue";
 import CrimeList from "../components/CrimeList.vue";
 import Navbar from "../components/Navbar.vue";
@@ -34,6 +35,7 @@ export default {
     // CreateShortForm,
     // ShortList,
     Navbar,
+    Feed,
   },
   methods: {},
 };

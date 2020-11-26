@@ -30,6 +30,15 @@ class Crimes {
   }
 
   /**
+   * Return an array of all of the crimetypes.
+   * 
+   * @return {crimeTypes[]}
+   */
+  static async getAllTypes() {
+    return db.all(`SELECT * FROM crimeTypes`);
+  }
+
+  /**
    * Return an array of all of the crimes.
    * 
    * @return {Crimes[]}

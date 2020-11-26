@@ -1,5 +1,5 @@
 <template>
-  <div class="map">
+  <div class="map col-md-8">
     <div>
       <div v-if="success" class="success-message">
         {{ success }}

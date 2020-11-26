@@ -45,5 +45,25 @@ router.get(
   }
 });
 
+/**
+ * List all crimeTypes.
+ * 
+ * @name GET /api/crime/types
+ * @return {Crimetypes[]} - list of neighborhoods
+ */
+router.get(
+  '/types', 
+  [],
+  async (req, res) => {
+  try {
+    // fetch all the neighborhoods from our DB
+    const allCrimeTypes = await Crimes.getAllTypes();
+    res.status(200).json({"all": allCrimeTypes}).end();
+
+  } catch (error) {
+    res.status(503).json({ error: `Could not fetch all crimetypes: ${error}` }).end();
+  }
+});
+
 
 module.exports = router;
