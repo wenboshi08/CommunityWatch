@@ -245,9 +245,16 @@ export default {
 </script>
 
 <style scoped>
-#map-container {
+/*#map-container {
   width: 800px;
   height: 600px;
   margin: 40px;
-}
+}*/
+#map-container{
+overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+    margin: 5%;
+  }
 </style>
