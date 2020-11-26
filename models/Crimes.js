@@ -43,8 +43,20 @@ class Crimes {
    * 
    * @return {Crimes[]}
    */
-  static async getAllCrimes() {
-    return db.all(`SELECT * FROM crimes LIMIT 20`);
+  static async getAllCrimes(type, neigh) {
+    if(type === undefined || type === "0") {
+      if(neigh === undefined || neigh === "0") {
+        return db.all(`SELECT * FROM crimes LIMIT 20`);
+      } else {
+        return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableNeighborhoodId} = '${neigh}' LIMIT 20`);
+      }
+    } else {
+      if(neigh === undefined || neigh === "0") {
+        return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableCrimeTypeId} = '${type}' LIMIT 20`);
+      } else {
+        return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableCrimeTypeId} = '${type}' AND ${db.columnNames.crimeTableNeighborhoodId} = '${neigh}' LIMIT 20`);
+      }
+    }
   }
 
   /**

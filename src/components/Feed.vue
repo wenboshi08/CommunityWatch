@@ -25,7 +25,7 @@
             {{ neighbor }}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" v-for="n in neighborhoods" v-bind:key="n.id" v-on:click="changeNeighbor(n.neighborhood)">{{n.neighborhood}}</a>
+            <a class="dropdown-item" v-for="n in neighborhoods" v-bind:key="n.id" v-on:click="changeNeighbor(n.neighborhood, n.id)">{{n.neighborhood}}</a>
         </div>
     </div>
     <div class="btn-group" v-if="page==='main'">
@@ -34,7 +34,7 @@
             {{ type }}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" v-for="t in types" v-bind:key="t.id" v-on:click="changeType(t.crimeType)">{{t.crimeType}}</a>
+            <a class="dropdown-item" v-for="t in types" v-bind:key="t.id" v-on:click="changeType(t.crimeType, t.id)">{{t.crimeType}}</a>
         </div>
     </div>
     
@@ -66,8 +66,10 @@ export default {
   data() {
     return {
       page: "main",
-      type: " all ",
+      type: "all",
+      type_id: "0",
       neighbor: "all",
+      neighbor_id: "0",
       types: [], 
       neighborhoods: [], 
       crimes: [],
@@ -112,16 +114,20 @@ export default {
         }
     },
 
-    changeType: function(newType) {
+    changeType: function(newType, id) {
         this.type = newType;
+        this.type_id = id;
+        this.getCrimes();
     },
 
-    changeNeighbor: function(newNeighbor) {
+    changeNeighbor: function(newNeighbor, id) {
         this.neighbor = newNeighbor;
+        this.neighbor_id = id;
+        this.getCrimes();
     },
 
     getCrimes: function() {
-        axios.get("/api/crimes").then(response => {
+        axios.get("/api/crimes?type=" + this.type_id + "&neigh=" + this.neighbor_id).then(response => {
             this.crimes = [...response.data];
         });
     },

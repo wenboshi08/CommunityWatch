@@ -18,7 +18,9 @@ router.get(
   async (req, res) => {
   try {    
     // fetch all the crimes from our DB
-    let allCrimes = await Crimes.getAllCrimes();
+    let type = req.query.type;
+    let neigh = req.query.neigh;
+    let allCrimes = await Crimes.getAllCrimes(type, neigh);
 
     let resolvePromise = async (crime) => {
       let crimeType = await Crimes.findCrimeTypeById(crime.crimeTypeId); 
