@@ -7,9 +7,9 @@
       <Map />
       <Feed />
     </div>
-    <div>
+    <!-- <div>
       <CrimeList />
-    </div>
+    </div> -->
   </div>
 </template>
 

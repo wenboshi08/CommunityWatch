@@ -35,7 +35,7 @@ class Crimes {
    * @return {crimeTypes[]}
    */
   static async getAllTypes() {
-    return db.all(`SELECT * FROM crimeTypes`);
+    return db.all(`SELECT * FROM crimeTypes ORDER BY crimeType`);
   }
 
   /**

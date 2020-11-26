@@ -32,7 +32,7 @@ class Neighborhoods {
    * @return {Neighborhood[]}
    */
   static async findAll() {
-    return db.all(`SELECT * FROM neighborhoods`);
+    return db.all(`SELECT * FROM neighborhoods ORDER BY neighborhood`);
   }
 
 
