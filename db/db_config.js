@@ -18,6 +18,10 @@ const columnNames = {
   crimeTableLocation: "location",
   feedTableUserId: "userId",
   feedTableNeighborhoodId: "neighborhoodId",
+  postTablePostId: "id", 
+  postTableUserId: "userId", 
+  postTableNeighborhoodId: "neighborhoodId", 
+  postTablePostContent: "content",
 };
 Object.freeze(columnNames);
 
@@ -29,6 +33,7 @@ function createDb() {
     createCrimeTypesTable();
     createCrimeTable();
     createFeedTable();
+    createPostTable(); 
   });
 };
 
@@ -78,6 +83,19 @@ function createFeedTable() {
     REFERENCES neighborhoods(${columnNames.neighborhoodTableId}),
     PRIMARY KEY (${columnNames.feedTableUserId}, ${columnNames.feedTableNeighborhoodId})
   )`);
+};
+
+function createPostTable() {
+  sqlDb.run(`CREATE TABLE IF NOT EXISTS posts (
+    ${columnNames.postTablePostId} INTEGER PRIMARY KEY AUTOINCREMENT,
+    ${columnNames.postTableUserId} INTEGER NOT NULL, 
+    ${columnNames.postTableNeighborhoodId} INTEGER NOT NULL, 
+    ${columnNames.postTablePostContent} TEXT NOT NULL, 
+    FOREIGN KEY(${columnNames.postTableUserId})
+    REFERENCES users(${columnNames.userId}),
+    FOREIGN KEY(${columnNames.postTableNeighborhoodId})
+    REFERENCES neighborhoods(${columnNames.neighborhoodTableId})
+  )`); 
 };
 
 // Helper wrapper functions that return promises that resolve when sql queries are complete.

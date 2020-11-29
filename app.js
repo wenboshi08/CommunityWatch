@@ -14,6 +14,7 @@ const indexRouter = require('./routes/index');
 const neighborhoodsRouter = require('./routes/neighborhoods');
 const crimesRouter = require('./routes/crimes');
 const feedsRouter = require('./routes/feeds');
+const postsRouter = require('./routes/posts'); 
 
 // const shortsRouter = require('./routes/shorts');
 const usersRouter = require('./routes/users');
@@ -55,6 +56,7 @@ app.use('/', indexRouter);
 app.use('/api/neighborhoods', neighborhoodsRouter);
 app.use('/api/crimes', crimesRouter);
 app.use('/api/feeds', feedsRouter);
+app.use('/api/posts', postsRouter); 
 // app.use('/api/shorts', shortsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/users/session', sessionRouter);

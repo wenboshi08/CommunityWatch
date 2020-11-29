@@ -54,12 +54,12 @@ router.post(
 
 /**
  * Delete a feed.
- * @name DELETE /api/feeds/neighborhood/:neighborhoodid
+ * @name DELETE /api/feeds/neighborhood/:neighborhoodId
  * @throws {400}
  */
 
 router.delete(
-    '/neighborhood/:neighborhoodid?',
+    '/neighborhood/:neighborhoodId?',
     [
         v.ensureUserLoggedIn,
         v.ensureValidNeighborhoodIdInParams,
@@ -69,7 +69,7 @@ router.delete(
             // middleware will ensure that a valid user is logged in
             // and will check that the neighborhood id is non-empty
             const loggedInUserId = req.session.uid;
-            const neighborhoodId = parseInt(req.params.neighborhoodid);
+            const neighborhoodId = parseInt(req.params.neighborhoodId);
             // ensure that the given feed exists in our DB
             const feed = await Feeds.findOne(loggedInUserId, neighborhoodId);
             if (!feed) {
@@ -113,19 +113,19 @@ router.get(
 
 /**
  * GET ALL feeds of a neighborhood Id
- * @name GET /api/feeds/neighborhood/:neighborhoodid
+ * @name GET /api/feeds/neighborhood/:neighborhoodId
  * return a list feeds belong to a neighborhood
  * @throws {400}
  */
 router.get(
-    '/neighborhood/:neighborhoodid?',
+    '/neighborhood/:neighborhoodId?',
     [
         v.ensureValidNeighborhoodIdInParams,
     ],
     async (req, res) => {
         try {
             // middleware will make sure that there is a non-empty neighborhood id!
-            const neighborhoodId = parseInt(req.params.neighborhoodid);
+            const neighborhoodId = parseInt(req.params.neighborhoodId);
             const feeds = await Feeds.findByNeighborhoodId(neighborhoodId);
             res.status(200).json(feeds).end();
         } catch (error) {
