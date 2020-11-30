@@ -19,7 +19,8 @@ router.get(
   async (req, res) => {
   try {    
     // fetch all the posts from our DB
-    let allPosts = await Posts.getAllPosts();
+    let neighborhoodId = req.query.neighborhoodId;
+    let allPosts = await Posts.getAllPosts(neighborhoodId);
 
     let resolvePromise = async (post) => {
       let poster = await Users.getFromID(post.userId); 
@@ -27,7 +28,7 @@ router.get(
       return ({
         postId: post.id, 
         posterId: post.userId, 
-        poster: poster.userName,
+        poster: poster.name,
         postContent: post.content, 
         neighborhoodId: post.neighborhoodId, 
         neighborhood: neighborhood.neighborhood, 
@@ -45,25 +46,25 @@ router.get(
   }
 });
 
-/**
- * List all posts by neighborhoods.
- * 
- * @name GET /api/posts/neighborhood/neighborhoodId
- * @return {Posts[]} - list of posts
- */
-router.get(
-  '/neighborhood/:neighborhoodId', 
-  [v.ensureValidNeighborhoodIdInParams],
-  async (req, res) => {
-  try {
-    let neighborhoodId = parseInt(req.params.neighborhoodId, 10);
-    const posts = await Posts.findPostByNeighborhoodId(neighborhoodId);
-    res.status(200).json(posts).end();
+// /**
+//  * List all posts by neighborhoods.
+//  * 
+//  * @name GET /api/posts/neighborhood/neighborhoodId
+//  * @return {Posts[]} - list of posts
+//  */
+// router.get(
+//   '/neighborhood/:neighborhoodId', 
+//   [v.ensureValidNeighborhoodIdInParams],
+//   async (req, res) => {
+//   try {
+//     let neighborhoodId = parseInt(req.params.neighborhoodId, 10);
+//     const posts = await Posts.findPostByNeighborhoodId(neighborhoodId);
+//     res.status(200).json(posts).end();
 
-  } catch (error) {
-    res.status(503).json({ error: `Could not fetch posts by neighborhood ${neighborhoodId}: ${error}` }).end();
-  }
-});
+//   } catch (error) {
+//     res.status(503).json({ error: `Could not fetch posts by neighborhood ${neighborhoodId}: ${error}` }).end();
+//   }
+// });
 
 /*
   Creates a new post, must be signed in

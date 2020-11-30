@@ -31,8 +31,12 @@ class Posts {
    * 
    * @return {Posts[]}
    */
-  static async getAllPosts() {
-      return db.all(`SELECT * FROM posts LIMIT 20`); 
+  static async getAllPosts(neighborhoodId) {
+    if(neighborhoodId === undefined || neighborhoodId === "0") {
+      return db.all(`SELECT * FROM posts ORDER BY id DESC LIMIT 20`);
+    } else {
+      return db.all(`SELECT * FROM posts WHERE ${db.columnNames.postTableNeighborhoodId} = '${neighborhoodId}' ORDER BY id DESC LIMIT 20`);
+    }
   }
 
   /**
