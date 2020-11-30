@@ -19,51 +19,6 @@
     <!-- HEADERS -->
     <div v-if="page === 'main'">
       <h2 class="mt-3">Crimes</h2>
-      <!-- CRIME FILTERS -->
-      <div class="btn-group">
-        Neighborhood:
-        <button
-          class="btn btn-secondary btn-sm dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          {{ neighbor }}
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a
-            class="dropdown-item"
-            v-for="n in neighborhoods"
-            v-bind:key="n.id"
-            v-on:click="changeNeighbor(n.neighborhood, n.id)"
-            >{{ n.neighborhood }}</a
-          >
-        </div>
-      </div>
-      <div class="btn-group" v-if="page === 'main'">
-        Crime Type:
-        <button
-          class="btn btn-secondary btn-sm dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          {{ type }}
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a
-            class="dropdown-item"
-            v-for="t in types"
-            v-bind:key="t.id"
-            v-on:click="changeType(t.crimeType, t.id)"
-            >{{ t.crimeType }}</a
-          >
-        </div>
-      </div>
       <div
         class="p-3 mb-2 bg-light text-dark overflow-auto"
         style="height: 500px"
@@ -91,19 +46,18 @@
 <script>
 import axios from "axios";
 import CrimeListItem from "./CrimeListItem";
-// import { eventBus } from "../main";
+import { eventBus } from "../main";
 
 export default {
   name: "Feed",
   components: { CrimeListItem },
-
+  props: {
+    type_id: Number,
+    neighbor_id: Number,
+  },
   data() {
     return {
       page: "main",
-      type: "all",
-      type_id: "0",
-      neighbor: "all",
-      neighbor_id: "0",
       types: [],
       neighborhoods: [],
       crimes: [],
@@ -111,35 +65,21 @@ export default {
       userName: this.$cookie.get("fritter-auth"),
     };
   },
+  created: function () {
+    this.getCrimes();
 
-  //   created: function() {
-  //     eventBus.$on("populate-popular", () => {
-  //       this.page = "popular";
-  //       this.clearMessages();
-  //       this.loadFreets();
-  //     });
+    eventBus.$on("changeType-success", () => {
+      this.getCrimes();
+    });
 
+    eventBus.$on("changeNeighbor-success", () => {
+      this.getCrimes();
+    });
+  },
   mounted: function () {
-    this.loadNeighborhoods();
-    this.loadTypes();
     this.getCrimes();
   },
-
   methods: {
-    loadTypes: function () {
-      axios.get("/api/crimes/types").then((response) => {
-        this.types = [{ id: 0, crimeType: "all" }];
-        this.types.push(...response.data.all);
-      });
-    },
-
-    loadNeighborhoods: function () {
-      axios.get("/api/neighborhoods").then((response) => {
-        this.neighborhoods = [{ id: 0, neighborhood: "all" }];
-        this.neighborhoods.push(...response.data.all);
-      });
-    },
-
     changePage: function (newPage) {
       this.page = newPage;
       if (this.page == "main") {
@@ -147,23 +87,14 @@ export default {
       }
     },
 
-    changeType: function (newType, id) {
-      this.type = newType;
-      this.type_id = id;
-      this.getCrimes();
-    },
-
-    changeNeighbor: function (newNeighbor, id) {
-      this.neighbor = newNeighbor;
-      this.neighbor_id = id;
-      this.getCrimes();
-    },
-
-    getCrimes: function () {
+    getCrimes: async function () {
+      let that = await this;
       axios
-        .get("/api/crimes?type=" + this.type_id + "&neigh=" + this.neighbor_id)
+        .get(
+          `/api/crimes?type=${that.$props.type_id}&neigh=${that.$props.neighbor_id}`
+        )
         .then((response) => {
-          this.crimes = [...response.data];
+          that.crimes = [...response.data];
         });
     },
   },
