@@ -71,7 +71,7 @@
     
     
         eventBus.$on("change-username-success", () => {
-          this.$cookie.set('fritter-auth', '');
+          this.$cookie.set('commwatch-auth', '');
           this.isSignedIn = false;
           this.messages.push(`Your username was successfully changed! Please sign in again.`);
           this.clearMessages();
