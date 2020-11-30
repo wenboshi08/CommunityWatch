@@ -150,6 +150,10 @@ export default {
     eventBus.$on("create-post-success", () => {
       this.getPosts();
     });
+
+    eventBus.$on("delete-post-success", () => {
+      this.getPosts();
+    });
   },
   mounted: function () {
     this.getCrimes();
