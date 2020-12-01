@@ -1,12 +1,13 @@
 <template>
   <div>
+    <div>Please sign-in to proceed</div>
+
     <form id="sign-in" class='component' v-on:submit.prevent="signIn" method="post">
       <input id='username' v-model.trim='username' type='text' name='username' placeholder="User's name"> <br>
-      <input id='password' v-model.trim='password' type='text' name='password' placeholder="User's password">
+      <input id='password' v-model.trim='password' type='text' name='password' placeholder="User's password"> <br>
 
       <input type='submit' value='Sign In' class="button">
     </form>
-    {{username}}
     <div v-if='errors.length' class="error-message" style="width: 250px;">
       <b>Please correct the following error(s):</b>
       <ul>

@@ -1,24 +1,19 @@
 <template>
     <div class = "main4" id="user-profile">
-        <div v-if='error' class="error-message">
-            {{ error }}
-        </div>
-        <div v-if='messages.length' class="success-message" style="text-align:center;">
-            <div v-for='message in messages' v-bind:key='message.id'>{{ message }}</div>
-        </div>
+        
         <div v-if="isSignedIn" >
-            <div class="small-headline-container">
-                <div style="text-align: center; margin:10px"> Signed in as <i>{{this.$cookie.get('commwatch-auth')}} </i></div>
+            <div class="">
+                <div style="text-align: center; margin:0px"> Signed in as <i>{{this.$cookie.get('commwatch-auth')}} </i></div>
                 <SignOut/>
             </div>
             <div class="form-container">
-                <div style="text-align: center; margin:20px; color: black; font-size:2em "> Account settings</div>
+                <div style="text-align: center; margin:2px; color: black; font-size:2em "> Account settings</div>
                 <div class="four wide column">
                     <img class="ui tiny avatar image" src="https://www.gravatar.com/avatar/default?s=200&r=pg&d=mm">
                 </div>
                 <ChangeUserCredentials/>
                 <div class = "danger">
-                    Danger zone<br>Warning: This action is not recoverable
+                    Danger zone<br>Warning: This action is not reversible!
                     <DeleteAccount/>
                 </div>
             </div>
@@ -31,6 +26,12 @@
                     </a>
                 </b-navbar-item>
             </template>
+        </div>
+        <div v-if='error' class="error-message">
+            {{ error }}
+        </div>
+        <div v-if='messages.length' class="success-message" style="text-align:center;">
+            <div v-for='message in messages' v-bind:key='message.id'>{{ message }}</div>
         </div>
     </div>
 </template>

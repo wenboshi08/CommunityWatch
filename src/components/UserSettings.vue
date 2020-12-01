@@ -6,6 +6,10 @@
 
     </div>
     <div v-else class="form-container">
+      <img
+                    src="../../imgs/logo_commwatch.png"
+                    alt="Community Watch, keeping communities safe" 
+                    >
       <SignIn/>
       <SignUp/>
     </div>

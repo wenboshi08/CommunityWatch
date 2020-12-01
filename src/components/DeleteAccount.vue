@@ -1,7 +1,9 @@
 <template>
-  <div id="delete-account" >
-    <button class="delete-account" v-on:click="deleteAccount" >Delete Account</button>
+  <div id="delete-account">
+  <a href="#" v-on:click="deleteAccount" class="deleteButton">Delete Account</a>
+    
   </div>
+
 </template>
 
 <script>
