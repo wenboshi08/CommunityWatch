@@ -9,22 +9,6 @@
       </div>
       <div class="container">
         <div id="map-container"></div>
-        <!-- <div v-if="crimes.length">
-          <google-map
-            :center="center"
-            :zoom="7"
-            style="width: 100%; height: 500px"
-          >
-            <google-marker
-              v-for="c in crimes"
-              v-bind:key="c.fileNumber"
-              v-bind:position="c.position"
-              v-bind:clickable="true"
-              v-bind:draggable="true"
-              v-on:click="center = c.position"
-            ></google-marker>
-          </google-map>
-        </div> -->
       </div>
     </div>
   </div>
@@ -37,23 +21,6 @@ import L from "leaflet";
 import mapquest from "mapquest";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
-// import data from "../../test-data.geojson";
-// import LeafletHeatmap from "./LeafletHeatmap";
-// import Vue from "vue";
-// import * as VueGoogleMaps from "vue2-google-maps";
-// import { Loader } from "google-maps";
-
-// import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
-
-// Vue.use(VueGoogleMaps, {
-//   installComponents: true,
-//   load: {
-//     key: "AIzaSyAlSCDlDz-SOG0h9L0sSogIxcNhznag1Lg",
-//     libraries: "places",
-//   },
-// });
-
-// Vue.filter("json", (x) => JSON.stringify(x));
 
 // import { eventBus } from "../main";
 
@@ -72,7 +39,7 @@ export default {
   created: function () {},
 
   mounted: function () {
-    // this.loadCrimes();
+    this.loadCrimes();
     this.setupLeafletMap();
   },
 
@@ -192,11 +159,20 @@ export default {
         onEachFeature: this.onEachFeature,
       }).addTo(mapDiv);
     },
-    resolveCrimePromise: async function (crime) {
+    getCoord: function (crime) {
       let coord;
-      await this.geoCodeAddress(crime.location, function (result) {
+      this.geoCodeAddress(crime.location, function (result) {
         coord = result;
+        console.log("c: ", coord);
       });
+      return coord;
+    },
+    resolveCrimePromise: async function (crime) {
+      let coord = await this.getCoord(crime);
+      // this.geoCodeAddress(crime.location, function (result) {
+      //   coord = result;
+      //   return result;
+      // });
 
       // wait for coord to to be assigned to result in callback
       // before i return object below that references coord in
@@ -245,16 +221,11 @@ export default {
 </script>
 
 <style scoped>
-/*#map-container {
-  width: 800px;
-  height: 600px;
-  margin: 40px;
-}*/
 #map-container {
-  overflow:hidden;
-  padding-bottom:56.25%;
-  position:relative;
-  height:0;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 0;
   margin: 5%;
 }
 </style>
