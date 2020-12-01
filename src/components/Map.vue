@@ -239,7 +239,7 @@ export default {
           const promises = crimes.map((crime) => {
             return axios
               .get(
-                `http://www.mapquestapi.com/geocoding/v1/address?key=${KEY}&location=${crime.location}`
+                `https://www.mapquestapi.com/geocoding/v1/address?key=${KEY}&location=${crime.location}`
               )
               .then((response) => {
                 return response.data.results[0].locations[0].displayLatLng;
