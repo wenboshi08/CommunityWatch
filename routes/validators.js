@@ -2,6 +2,7 @@ const express = require('express');
 
 const Neighborhoods = require('../models/Neighborhoods');
 const Users = require('../models/Users');
+const Posts = require('../models/Posts');
 
 
 // const Shorts = require('../models/Shorts');
@@ -104,7 +105,7 @@ const ensureValidPasswordInBody = function(req, res, next) {
 
 // ------------------------------ Params
 const ensureValidNeighborhoodIdInParams = function(req, res, next) {
-  if (!req.params.neighborhoodid) {
+  if (!req.params.neighborhoodId) {
     res.status(400).json({ error: "You must specify a valid neighborhoodId in the params" }).end();
     return;
   }
@@ -119,8 +120,31 @@ const ensureValidUserIdInParams = function(req, res, next) {
   next();
 };
 
-// ------------------------------ AUTH
+const ensureValidPostIdInParams = function(req, res, next) {
+  if (!req.params.postId) {
+    res.status(400).json({ error: "You must specify a valid postId in the params" }).end();
+    return;
+  }
+  next();
+};
 
+// ------------------------------ AUTH
+const ensurePostedByUser = async function(req, res, next) {
+  let id = req.params.postId ? req.params.postId : req.body.id;
+  let post = await Posts.findPostById(parseInt(id, 10));
+  let poster = post.userId; 
+  let loggedInUserId = req.session.uid; 
+  if (poster !== loggedInUserId) {
+    res
+      .status(401)
+      .json({
+        error: "Unauthorized. Can't modify or delete a post you didn't create."
+      })
+      .end();
+  } else {
+    next(); 
+  }
+};
 
 
 
@@ -132,7 +156,8 @@ module.exports = {
   ensureValidPasswordInBody,
   ensureValidNeighborhoodIdInParams,
   ensureValidUserIdInParams,
-
+  ensureValidPostIdInParams,
+  ensurePostedByUser,
 };
 
 

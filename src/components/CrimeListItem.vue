@@ -1,44 +1,24 @@
 <template>
   <div class="card w-100 mt-3">
    <div class="card-body">
-    <div class="float-right">
-      {{ crime.reportDate }}
-    </div>
-    <div>
-      <h5 class="card-title mt-4"> {{crime.crimeType}} </h5>
-    </div>
-    <div>
-     <h6 class="card-subtitle text-muted"> {{ crime.location }} </h6>
-    </div>
-    <div v-if='following'>
-        <button type="button" class="float-right btn btn-outline-primary btn-sm" v-on:click="unfollow">Unfollow </button>
-    </div>
-    <div v-else>
-      <button type="button" class="float-right btn btn-outline-primary btn-sm" v-on:click="follow">Follow </button>
-    </div>
-    <div>
-     <h6 class="card-subtitle mt-3 text-muted"> {{ crime.neighborhood }} </h6>
-    </div>
-
-    <!-- Upvote/Refreet -->
-    <!-- <div v-if='freet.upvotesIds.includes(userId)' class="upvoter">
-      <p>Upvotes: {{ freet.votes }}</p>
-      <a class="card-link" v-on:click="downvoteFreet">Downvote</a>
-      <a class="card-link" v-on:click="getUpvoters">See upvotes</a>
-      <a class="card-link" v-on:click="refreet">Refreet</a>
-    </div>
-    <div v-else class="upvoter">
-      <p>Upvotes: {{ freet.votes }}</p>
-      <a class="card-link" v-on:click="upvoteFreet">Upvote</a>
-      <a class="card-link" v-on:click="getUpvoters">See upvotes</a>
-      <a class="card-link" v-on:click="refreet">Refreet</a>
-    </div> -->
-
+      <div class="float-right">
+        {{ crime.reportDate }}
+      </div>
+      <div>
+        <h5 class="card-title mt-4"> {{crime.crimeType}} </h5>
+      </div>
+      <div>
+        <h6 class="card-subtitle text-muted"> {{ crime.location }} </h6>
+      </div>
+      <div>
+        <h6 class="card-subtitle mt-3 text-muted">{{ crime.neighborhood }}</h6>
+      </div>
     </div>
   </div>
+  <!-- <div v-if='following'>
+        <button type="button" class="float-right btn btn-outline-primary btn-sm" v-on:click="unfollow">Unfollow </button> -->
 </template>
-
-
+  
 <script>
 // import axios from "axios";
 // import { eventBus } from "../main";
