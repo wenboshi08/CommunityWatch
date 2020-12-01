@@ -66,7 +66,7 @@ class Feeds {
      * @return {Feed[]} - found Feeds
      */
     static async findByUserId(userId) {
-        return db.all(`SELECT * FROM feeds WHERE ${db.columnNames.feedTableUserId} = '${userId}'`);
+        return db.all(`SELECT ${db.columnNames.feedTableNeighborhoodId} FROM feeds WHERE ${db.columnNames.feedTableUserId} = '${userId}'`);
     }
 
     /**

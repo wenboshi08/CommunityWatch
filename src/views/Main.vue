@@ -3,28 +3,6 @@
     <Navbar />
     <div class="row" style="margin: 20px">
       <div class="btn-group">
-        Neighborhood:
-        <button
-          class="btn btn-secondary btn-sm dropdown-toggle"
-          type="button"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          {{ neighbor }}
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a
-            class="dropdown-item"
-            v-for="n in neighborhoods"
-            v-bind:key="n.id"
-            v-on:click="changeNeighbor(n.neighborhood, n.id)"
-            >{{ n.neighborhood }}</a
-          >
-        </div>
-      </div>
-      <div class="btn-group">
         Crime Type:
         <button
           class="btn btn-secondary btn-sm dropdown-toggle"
@@ -46,6 +24,37 @@
           >
         </div>
       </div>
+      
+      <div class="btn-group">
+        Neighborhood: 
+        <button
+          class="btn btn-secondary btn-sm dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          {{ neighbor }}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a
+            class="dropdown-item"
+            v-for="n in neighborhoods"
+            v-bind:key="n.id"
+            v-on:click="changeNeighbor(n.neighborhood, n.id)"
+            >{{ n.neighborhood }}</a
+          >
+        </div>
+      </div>
+
+      <div v-if='following.includes(neighbor_id)'>
+        <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="unfollow">Unfollow </button> 
+      </div>
+      <div v-else-if='userId !== -1 && neighbor_id !== 0'>
+        <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="follow">Follow </button> 
+      </div>
+
     </div>
     <div class="main h-auto">
       <Map v-bind:type_id="type_id" v-bind:neighbor_id="neighbor_id" />
@@ -73,6 +82,8 @@ export default {
       neighbor_id: 0,
       types: [],
       neighborhoods: [],
+      following: [],
+      userId: this.$cookie.get("commwatch-auth-id"),
     };
   },
   components: {
@@ -83,10 +94,21 @@ export default {
     Feed,
   },
   mounted: function () {
+    this.loadFollowing();
     this.loadNeighborhoods();
     this.loadTypes();
   },
   methods: {
+    loadFollowing: function () {
+      if (this.userId !== '') {
+        axios.get("/api/feeds/user?id=" + this.userId).then((response) => {
+          this.following = response.data.map(id => id.neighborhoodId);
+        });
+      } else {
+        this.following = [];
+      }
+    },
+
     loadTypes: function () {
       axios.get("/api/crimes/types").then((response) => {
         this.types = [{ id: 0, crimeType: "all" }];
@@ -111,6 +133,23 @@ export default {
       this.neighbor = newNeighbor;
       this.neighbor_id = id;
       eventBus.$emit("changeNeighbor-success", true);
+    },
+
+    follow: function () {
+      if (this.userId !== '' && this.neighbor_id !== 0) {
+        const bodyContent = { userId: this.userId, neighborhoodId: this.neighbor_id };
+        axios.post("/api/feeds", bodyContent).then(() => {
+          this.loadFollowing();
+        });
+      } 
+    },
+
+    unfollow: function () {
+      if (this.userId !== '' && this.neighbor_id !== 0) {
+        axios.put("/api/feeds", { userId: this.userId, neighborhoodId: this.neighbor_id }).then(() => {
+          this.loadFollowing();
+        });
+      } 
     },
   },
 };
