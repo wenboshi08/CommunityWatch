@@ -186,6 +186,13 @@ export default {
         .then((response) => {
           that.posts = [...response.data];
         });
+      // if(this.page == "main") {
+      //   axios.get("/api/crimes?type=" + this.type_id + "&neigh=" + this.neighbor_id).then(response => {
+      //       this.crimes = [...response.data];
+      //   });
+      // } else {
+      //   this.crimes = [];
+      // } 
     },
 
     loadNeighborhoods: function () {

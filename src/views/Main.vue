@@ -48,7 +48,7 @@
       </div>
     </div>
     <div class="main h-auto">
-      <Map />
+      <Map v-bind:type_id="type_id" v-bind:neighbor_id="neighbor_id" />
       <Feed v-bind:type_id="type_id" v-bind:neighbor_id="neighbor_id" />
     </div>
   </div>
