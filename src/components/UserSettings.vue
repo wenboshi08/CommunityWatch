@@ -61,7 +61,7 @@ export default {
     
     eventBus.$on("signout-success", () => {
       this.$cookie.set('commwatch-auth', '');
-      this.$cookie.set('commwatch-auth-id', -1);
+      this.$cookie.set('commwatch-auth-id', '-1');
       this.isSignedIn = false;
       this.messages.push("You have been signed out!");
       this.clearMessages();

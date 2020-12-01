@@ -48,10 +48,10 @@
         </div>
       </div>
 
-      <div v-if='following.includes(neighbor_id)'>
+      <div v-if="userId !== undefined && userId!== '-1' && neighbor_id !== 0 && following.includes(neighbor_id)">
         <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="unfollow">Unfollow </button> 
       </div>
-      <div v-else-if='userId !== -1 && neighbor_id !== 0'>
+      <div v-else-if="userId !== undefined && userId!== '-1' && neighbor_id !== 0">
         <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="follow">Follow </button> 
       </div>
 
