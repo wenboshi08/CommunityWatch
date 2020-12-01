@@ -50,7 +50,7 @@ router.get(
 /**
  * List all crimeTypes.
  * 
- * @name GET /api/crime/types
+ * @name GET /api/crimes/types
  * @return {Crimetypes[]} - list of neighborhoods
  */
 router.get(

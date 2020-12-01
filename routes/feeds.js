@@ -15,14 +15,13 @@ const router = express.Router();
 router.post(
     '/',
     [
-        v.ensureUserLoggedIn,
         v.ensureValidNeighborhoodIdInBody,
     ],
     async (req, res) => {
         try {
             // middleware will make sure that there is a
             // valid user logged in, and non-empty and valid neighborhood id!
-            const loggedInUserId = req.session.uid;
+            const loggedInUserId = parseInt(req.body.userId);
             const neighborhoodId = parseInt(req.body.neighborhoodId);
 
             const neighborhood = await Neighborhoods.findOneById(neighborhoodId);
@@ -58,18 +57,17 @@ router.post(
  * @throws {400}
  */
 
-router.delete(
-    '/neighborhood/:neighborhoodId?',
+router.put(
+    '/',
     [
-        v.ensureUserLoggedIn,
-        v.ensureValidNeighborhoodIdInParams,
+        v.ensureValidNeighborhoodIdInBody,
     ],
     async (req, res) => {
         try {
             // middleware will ensure that a valid user is logged in
             // and will check that the neighborhood id is non-empty
-            const loggedInUserId = req.session.uid;
-            const neighborhoodId = parseInt(req.params.neighborhoodId);
+            const loggedInUserId = parseInt(req.body.userId);
+            const neighborhoodId = parseInt(req.body.neighborhoodId);
             // ensure that the given feed exists in our DB
             const feed = await Feeds.findOne(loggedInUserId, neighborhoodId);
             if (!feed) {
@@ -90,19 +88,16 @@ router.delete(
 
 /**
  * GET ALL feeds of a userid
- * @name GET /api/feeds/user/:userid
+ * @name GET /api/feeds/user
  * return a list feeds belong to the user
  * @throws {400}
  */
 router.get(
-    '/user/:userid?',
-    [
-        v.ensureValidUserIdInParams,
-    ],
+    '/user', [],
     async (req, res) => {
         try {
             // middleware will make sure that there is a valid user id!
-            const userId = parseInt(req.params.userid);
+            const userId = parseInt(req.query.id);
             const feeds = await Feeds.findByUserId(userId);
             res.status(200).json(feeds).end();
         } catch (error) {
