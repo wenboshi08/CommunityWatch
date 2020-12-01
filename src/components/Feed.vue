@@ -109,9 +109,7 @@ export default {
 
     changePage: function(newPage) {
         this.page = newPage;
-        if(this.page == "main") {
-            this.getCrimes();
-        }
+        this.getCrimes();
     },
 
     changeType: function(newType, id) {
@@ -127,9 +125,13 @@ export default {
     },
 
     getCrimes: function() {
+      if(this.page == "main") {
         axios.get("/api/crimes?type=" + this.type_id + "&neigh=" + this.neighbor_id).then(response => {
             this.crimes = [...response.data];
         });
+      } else {
+        this.crimes = [];
+      } 
     },
   }
 };
