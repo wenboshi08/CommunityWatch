@@ -71,9 +71,14 @@ Navigate to `localhost:8080` in your browser
     * crimes.js
 * **Fernando Herrera**:
   * src
+    * Main.vue 
+    * components/Feed.vue
+    * components/UserSettings.vue
     * components/CrimeList.vue
     * components/CrimeListItem.vue
   * models:
     * Crime.js
+    * Feed.js (small changes)
   * routes:
     * crimes.js
+    * feed.js (small changes)
