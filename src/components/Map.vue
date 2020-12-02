@@ -235,7 +235,7 @@ export default {
           return response.data;
         })
         .then((crimes) => {
-          const KEY = "gX72Jyp1H1l0fIoGb06xGY6yJ9h6KMN1";
+          const KEY = "2PiwKOE0ZPWlhGEJjVghZmpmDWoYYGiJ";
           const promises = crimes.map((crime) => {
             return axios
               .get(
