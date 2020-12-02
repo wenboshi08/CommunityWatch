@@ -52,8 +52,8 @@ router.post(
 
 
 /**
- * Delete a feed.
- * @name DELETE /api/feeds/neighborhood/:neighborhoodId
+ * Remove a feed.
+ * @name PUT /api/feeds/
  * @throws {400}
  */
 

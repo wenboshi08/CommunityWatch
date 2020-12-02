@@ -51,6 +51,8 @@ router.get(
         error: `Neighborhood with id ${neighborhoodId} does not exist`,
       }).end();
       return;
+    } else {
+      res.status(200).json(neighborhood).end();
     }
   } catch (error) {
     res.status(503).json({ error: `Could not retrieve the neighborhood: ${error}` }).end();
