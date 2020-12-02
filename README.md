@@ -72,16 +72,30 @@ Navigate to `localhost:8080` in your browser
     * postdata.py
   * db
     * db_config.js
+  * models
+    * Feeds.js
+  * routes
+    * feeds.js
+  * src
+    * part of components/Map.vue
+    * minor part of components/Navbar.vue
+    * views/MyNeighborhood.vue
 * **Stuti Vishwabhan**:
   * src
     * components/Map.vue
     * components/CrimeList.vue
     * components/CrimeListItem.vue
     * components/Main.vue
+    * components/Feed.vue
+    * components/PostItem.vue
+    * components/DeletePostIcon.vue
   * db:
     * db_config.js
+  * models: 
+    * Posts.js
   * routes:
     * crimes.js
+    * posts.js
 * **Fernando Herrera**:
   * src
     * components/CrimeList.vue
