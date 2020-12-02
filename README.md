@@ -65,10 +65,16 @@ Navigate to `localhost:8080` in your browser
     * components/CrimeList.vue
     * components/CrimeListItem.vue
     * components/Main.vue
+    * components/Feed.vue
+    * components/PostItem.vue
+    * components/DeletePostIcon.vue
   * db:
     * db_config.js
+  * models: 
+    * Posts.js
   * routes:
     * crimes.js
+    * posts.js
 * **Fernando Herrera**:
   * src
     * components/CrimeList.vue
