@@ -6,17 +6,17 @@ engine = create_engine('sqlite:///../crimedb.db')
 conn = engine.connect()
 
 # prepare dataframe to write to sql
-crimes = pd.read_csv('Crime_Reports.csv')
+crimes = pd.read_csv('crimes_coordinates.csv')
 # remove the crime record where Neighborhood is NaN
 cleaned_crimes = crimes.dropna()
 
-#convert Date of Report to ISO-8601 i.e.: YYYY-MM-DDTHH:MM:SS.SSS
-cleaned_crimes['Date of Report'] = pd.to_datetime(cleaned_crimes['Date of Report']).apply(
-        lambda x: x.strftime('%Y-%m-%dT%H:%M%:%SZ'))
-
-# select needed columns and rename columns to match db_config.js
-cleaned_crimes = cleaned_crimes[['File Number', 'Date of Report', 'Crime', 'Neighborhood', 'Location']]
-cleaned_crimes.columns = ['fileNumber', 'reportDate', 'crimeType', 'neighborhoodName', 'location']
+# #convert Date of Report to ISO-8601 i.e.: YYYY-MM-DDTHH:MM:SS.SSS
+# cleaned_crimes['Date of Report'] = pd.to_datetime(cleaned_crimes['Date of Report']).apply(
+#         lambda x: x.strftime('%Y-%m-%dT%H:%M%:%SZ'))
+#
+# # select needed columns and rename columns to match db_config.js
+# cleaned_crimes = cleaned_crimes[['File Number', 'Date of Report', 'Crime', 'Neighborhood', 'Location']]
+# cleaned_crimes.columns = ['fileNumber', 'reportDate', 'crimeType', 'neighborhoodName', 'location']
 
 # prepare crimeType and neighborhood tables
 CrimeType = cleaned_crimes['crimeType'].unique()

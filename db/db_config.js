@@ -16,6 +16,8 @@ const columnNames = {
   crimeTableCrimeTypeId: "crimeTypeId",
   crimeTableNeighborhoodId: "neighborhoodId",
   crimeTableLocation: "location",
+  crimeTableLatitude: "latitude",
+  crimeTableLongitude: "longitude",
   feedTableUserId: "userId",
   feedTableNeighborhoodId: "neighborhoodId",
   postTablePostId: "id", 
@@ -66,6 +68,8 @@ function createCrimeTable() {
     ${columnNames.crimeTableCrimeTypeId} INTEGER NOT NULL,
     ${columnNames.crimeTableNeighborhoodId} INTEGER NOT NULL,
     ${columnNames.crimeTableLocation} TEXT NOT NULL,
+    ${columnNames.crimeTableLatitude} REAL NOT NULL,
+    ${columnNames.crimeTableLongitude} REAL NOT NULL,
     FOREIGN KEY(${columnNames.crimeTableNeighborhoodId})
     REFERENCES neighborhoods(${columnNames.neighborhoodTableId}),
     FOREIGN KEY(${columnNames.crimeTableCrimeTypeId})
