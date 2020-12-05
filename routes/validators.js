@@ -103,6 +103,24 @@ const ensureValidPasswordInBody = function(req, res, next) {
   next();
 };
 
+const ensureValidUserIdInBody = function(req, res, next) {
+  if (!req.body.userId) {
+    res.status(400).json({ error: "You must specify a valid user Id in the body" }).end();
+    return;
+  }
+  next();
+};
+
+
+const ensureValidPostIdInBody = function(req, res, next) {
+  if (!req.body.postId) {
+    res.status(400).json({ error: "You must specify a valid post Id in the body" }).end();
+    return;
+  }
+  next();
+};
+
+
 // ------------------------------ Params
 const ensureValidNeighborhoodIdInParams = function(req, res, next) {
   if (!req.params.neighborhoodId) {
@@ -158,6 +176,8 @@ module.exports = {
   ensureValidUserIdInParams,
   ensureValidPostIdInParams,
   ensurePostedByUser,
+  ensureValidUserIdInBody,
+  ensureValidPostIdInBody,
 };
 
 
