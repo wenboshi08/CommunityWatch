@@ -24,6 +24,10 @@ const columnNames = {
   postTableUserId: "userId", 
   postTableNeighborhoodId: "neighborhoodId", 
   postTablePostContent: "content",
+  upvoteTableUserId: "userId",
+  upvoteTablePostId: "postId",
+  downvoteTableUserId: "userId",
+  downvoteTablePostId: "postId",
 };
 Object.freeze(columnNames);
 
@@ -35,7 +39,9 @@ function createDb() {
     createCrimeTypesTable();
     createCrimeTable();
     createFeedTable();
-    createPostTable(); 
+    createPostTable();
+    createUpvoteTable();
+    createDownvoteTable();
   });
 };
 
@@ -101,6 +107,32 @@ function createPostTable() {
     REFERENCES neighborhoods(${columnNames.neighborhoodTableId})
   )`); 
 };
+
+function createUpvoteTable() {
+  sqlDb.run(`CREATE TABLE IF NOT EXISTS upvotes (
+    ${columnNames.upvoteTableUserId} INTEGER NOT NULL,
+    ${columnNames.upvoteTablePostId} INTEGER NOT NULL,
+    FOREIGN KEY(${columnNames.upvoteTableUserId})
+    REFERENCES users(${columnNames.userId}),
+    FOREIGN KEY(${columnNames.upvoteTablePostId})
+    REFERENCES posts(${columnNames.postTablePostId}),
+    PRIMARY KEY (${columnNames.upvoteTableUserId}, ${columnNames.upvoteTablePostId})
+  )`);
+};
+
+function createDownvoteTable() {
+  sqlDb.run(`CREATE TABLE IF NOT EXISTS downvotes (
+    ${columnNames.downvoteTableUserId} INTEGER NOT NULL,
+    ${columnNames.downvoteTablePostId} INTEGER NOT NULL,
+    FOREIGN KEY(${columnNames.downvoteTableUserId})
+    REFERENCES users(${columnNames.userId}),
+    FOREIGN KEY(${columnNames.downvoteTablePostId})
+    REFERENCES posts(${columnNames.postTablePostId}),
+    PRIMARY KEY (${columnNames.downvoteTableUserId}, ${columnNames.downvoteTablePostId})
+  )`);
+};
+
+
 
 // Helper wrapper functions that return promises that resolve when sql queries are complete.
 
