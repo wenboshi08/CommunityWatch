@@ -123,6 +123,96 @@ class Posts {
     });
   }
 
+    /**
+   * Get a flag for user if any 
+   * 
+   * @param {Integer} userId
+   * @param {Integer} postId
+   */
+  static async getFlag(userId, postId) {
+    let result = await db.get(`SELECT * FROM flags WHERE ${db.columnNames.flagTableUserId} == ${userId} AND ${db.columnNames.flagTablePostId} == ${postId}`);
+    return result;
+ 
+  }
+
+
+    /**
+   * Get all flags for a post
+   * 
+   * @param {Integer} userId
+   * @param {Integer} postId
+   */
+  static async getAllFlags(postId) {
+    let result = await db.get(`SELECT * FROM flags WHERE ${db.columnNames.flagTablePostId} == ${postId}`);
+    return result;
+ 
+  }
+
+  /**
+   * Toggle Flag by its userid and postid.
+   * 
+   * @param {Integer} postId - id of post
+   * @param {Integer} userId - id of user
+   * @return {boolean | undefined}
+   */
+  static async toggleFlag(userId, postId)
+  {
+    let result = await db.get(`SELECT * FROM flags WHERE ${db.columnNames.flagTableUserId} == ${userId} AND ${db.columnNames.flagTablePostId} == ${postId}`);
+    
+    if (result == undefined)
+    {
+      return Posts.findPostById(postId).then(post =>
+      {
+        db.run(
+          `INSERT INTO flags (${db.columnNames.flagTableUserId}, ${db.columnNames.flagTablePostId})
+            VALUES (${userId}, "${postId}")`
+        );
+        return true;
+      });
+
+    }
+    else
+    {
+
+      return Posts.findPostById(postId).then(post =>
+      {
+        db.run(
+          `DELETE FROM flags WHERE ${db.columnNames.flagTablePostId} == ${postId} AND ${db.columnNames.flagTableUserId} == ${userId}`
+        );
+        return false;
+      });
+    }
+  }
+
+  //  /**
+  //  * Flag a post 
+  //  * 
+  //  * @param {Integer} postId
+  //  */
+  // static async flagPost(userId, postId) {
+  //   return Posts.findPostById(postId).then(post => {
+  //     db.run(
+  //       `INSERT INTO flags (${db.columnNames.flagTableUserId}, ${db.columnNames.flagTablePostId})
+  //           VALUES (${userId}, "${postId}")`
+  //     );
+  //     return post;
+  //   });
+  // }
+
+  // *
+  //  * Remove a Flag from post 
+  //  * @param {Integer} userId
+  //  * @param {Integer} postId
+   
+  // static async deleteFlag(userId, postId) {
+  //   return Posts.findPostById(postId).then(post => {
+  //     db.run(
+  //       `DELETE FROM flags WHERE ${db.columnNames.postTablePostId} == ${postId} AND ${db.columnNames.postTableUserId} == ${userId}`
+  //     );
+  //     return post;
+  //   });
+  // }
+
 
 }
 

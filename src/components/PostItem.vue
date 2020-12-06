@@ -3,7 +3,13 @@
     <div class="card-body">
       <div class="float-right" v-if="checkIfUserAuthoredPost()">
         <DeletePostIcon v-bind:post="post" />
+
       </div>
+       <div class="floatright" v-if="isSignedIn">
+        <FlagPostIcon v-bind:post="post"/>
+      </div>
+        
+
       <div>
         <h5 class="card-title mt-4">{{ post.poster }}</h5>
       </div>
@@ -20,6 +26,7 @@
 
 <script>
 import DeletePostIcon from "./DeletePostIcon";
+import FlagPostIcon from "./FlagPostIcon";
 // import axios from "axios";
 // import { eventBus } from "../main";
 
@@ -27,16 +34,25 @@ export default {
   name: "PostItem",
   components: {
     DeletePostIcon,
+    FlagPostIcon,
   },
   props: {
     post: Object,
   },
 
   data() {
-    return {};
+    return {
+      isSignedIn : false,
+    };
   },
 
   computed: {},
+  created : function() {
+    let authenticated = this.$cookie.get('commwatch-auth');
+          if (authenticated) {
+            this.isSignedIn = true;
+          }
+  },
 
   methods: {
     checkIfUserAuthoredPost: function () {

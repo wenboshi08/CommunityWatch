@@ -108,6 +108,78 @@ router.patch(
   }
 );
 
+
+
+/*
+ Get a flag, must be signed in 
+ */
+router.get(
+  "/flag/:postId?",
+  [
+    v.ensureUserLoggedIn,
+    v.ensureValidPostIdInParams,
+  ],
+  async (req, res) => {
+    const loggedInUserId = req.session.uid
+    let id = parseInt(req.params.postId, 10);
+    let flagged = await Posts.getFlag(loggedInUserId, id);
+    console.log("flag " +  flagged);
+    res
+      .status(200)
+      .json({
+        success: `Post ${id} retrieved.`,
+        flagged : flagged,
+      })
+      .end();
+  }
+);
+
+
+/*
+ Get all flags, must be signed in 
+ */
+router.get(
+  "/flag/all/:postId?",
+  [
+    v.ensureValidPostIdInParams,
+  ],
+  async (req, res) => {
+    let id = parseInt(req.params.postId, 10);
+    let flagged = await Posts.getAllFlags(id);
+    console.log("flag " +  flagged);
+    res
+      .status(200)
+      .json({
+        success: `Post ${id} retrieved.`,
+        flagged : flagged,
+      })
+      .end();
+  }
+);
+
+/*
+ Flag a post, must be signed in 
+ */
+router.put(
+  "/flag/:postId?",
+  [
+    v.ensureUserLoggedIn,
+    v.ensureValidPostIdInParams,
+  ],
+  async (req, res) => {
+    const loggedInUserId = req.session.uid
+    let id = parseInt(req.params.postId, 10);
+    let flagged = await Posts.toggleFlag(loggedInUserId, id);
+    res
+      .status(200)
+      .json({
+        success: `Post ${id} flagged.`,
+        flagged : flagged,
+      })
+      .end();
+  }
+);
+
 /*
  Delete a post, must be signed in as the user who posted
  */

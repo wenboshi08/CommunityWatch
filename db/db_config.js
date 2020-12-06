@@ -28,6 +28,8 @@ const columnNames = {
   upvoteTablePostId: "postId",
   downvoteTableUserId: "userId",
   downvoteTablePostId: "postId",
+  flagTableUserId: "userId",
+  flagTablePostId: "postId",
 };
 Object.freeze(columnNames);
 
@@ -42,6 +44,7 @@ function createDb() {
     createPostTable();
     createUpvoteTable();
     createDownvoteTable();
+    createFlagTable();
   });
 };
 
@@ -129,6 +132,18 @@ function createDownvoteTable() {
     FOREIGN KEY(${columnNames.downvoteTablePostId})
     REFERENCES posts(${columnNames.postTablePostId}),
     PRIMARY KEY (${columnNames.downvoteTableUserId}, ${columnNames.downvoteTablePostId})
+  )`);
+};
+
+function createFlagTable() {
+  sqlDb.run(`CREATE TABLE IF NOT EXISTS flags (
+    ${columnNames.flagTableUserId} INTEGER NOT NULL,
+    ${columnNames.flagTablePostId} INTEGER NOT NULL,
+    FOREIGN KEY(${columnNames.flagTableUserId})
+    REFERENCES users(${columnNames.userId}),
+    FOREIGN KEY(${columnNames.flagTablePostId})
+    REFERENCES posts(${columnNames.postTablePostId}),
+    PRIMARY KEY (${columnNames.flagTableUserId}, ${columnNames.flagTablePostId})
   )`);
 };
 

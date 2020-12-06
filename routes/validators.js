@@ -78,6 +78,8 @@ const ensureUserNotLoggedIn = function(req, res, next) {
 };
 
 const ensureUserLoggedIn = function(req, res, next) {
+  console.log(`${req.session.uid}`);
+  
   if (!req.session.uid) {
     res.status(401).json({ error: "Must be signed in!" }).end();
     return;
