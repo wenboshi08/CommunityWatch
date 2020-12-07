@@ -3,7 +3,7 @@
         <div v-if="isSignedIn">
             <div  v-if="upvoted">
                 <img
-                        src="../../imgs/upvoteIconSolid.png"
+                        src="../../imgs/upvoteIconSolid.svg"
                         width="30px"
                         title="Upvote"
                         class="upvoteImg"
@@ -13,7 +13,7 @@
             </div>
             <div v-else >
                 <img
-                        src="../../imgs/upvoteIcon.png"
+                        src="../../imgs/upvoteIcon.svg"
                         width="30px"
                         title="Upvote"
                         class="upvoteImg"
@@ -24,7 +24,7 @@
         </div>
         <div v-else>
             <img
-                    src="../../imgs/upvoteIcon.png"
+                    src="../../imgs/upvoteIcon.svg"
                     width="30px"
                     title="Upvote"
                     class="upvoteImg"
