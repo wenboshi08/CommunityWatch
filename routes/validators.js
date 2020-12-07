@@ -3,6 +3,7 @@ const express = require('express');
 const Neighborhoods = require('../models/Neighborhoods');
 const Users = require('../models/Users');
 const Posts = require('../models/Posts');
+const Replies = require('../models/Replies');
 
 
 // const Shorts = require('../models/Shorts');
@@ -149,6 +150,14 @@ const ensureValidPostIdInParams = function(req, res, next) {
   next();
 };
 
+const ensureValidReplyIdInParams = function(req, res, next) {
+  if (!req.params.replyId) {
+    res.status(400).json({ error: "You must specify a valid replyId in the params" }).end();
+    return;
+  }
+  next();
+};
+
 // ------------------------------ AUTH
 const ensurePostedByUser = async function(req, res, next) {
   let id = req.params.postId ? req.params.postId : req.body.id;
@@ -167,6 +176,23 @@ const ensurePostedByUser = async function(req, res, next) {
   }
 };
 
+const ensureRepliedByUser = async function(req, res, next) {
+  let id = req.params.replyId ? req.params.replyId : req.body.id;
+  let reply = await Replies.findReplyById(parseInt(id, 10));
+  let replier = reply.userId; 
+  let loggedInUserId = req.session.uid; 
+  if (replier !== loggedInUserId) {
+    res
+      .status(401)
+      .json({
+        error: "Unauthorized. Can't modify or delete a reply you didn't create."
+      })
+      .end();
+  } else {
+    next(); 
+  }
+};
+
 
 
 module.exports = {
@@ -178,7 +204,9 @@ module.exports = {
   ensureValidNeighborhoodIdInParams,
   ensureValidUserIdInParams,
   ensureValidPostIdInParams,
+  ensureValidReplyIdInParams,
   ensurePostedByUser,
+  ensureRepliedByUser, 
   ensureValidUserIdInBody,
   ensureValidPostIdInBody,
 };
