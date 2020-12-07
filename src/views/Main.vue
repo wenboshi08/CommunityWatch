@@ -24,9 +24,9 @@
           >
         </div>
       </div>
-      
+
       <div class="btn-group">
-        Neighborhood: 
+        Neighborhood:
         <button
           class="btn btn-secondary btn-sm dropdown-toggle"
           type="button"
@@ -48,17 +48,41 @@
         </div>
       </div>
 
-      <div v-if="userId !== undefined && userId!== '-1' && neighbor_id !== 0 && following.includes(neighbor_id)">
-        <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="unfollow">Unfollow </button> 
+      <div
+        v-if="
+          userId !== undefined &&
+          userId !== '-1' &&
+          neighbor_id !== 0 &&
+          following.includes(neighbor_id)
+        "
+      >
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          v-on:click="unfollow"
+        >
+          Unfollow
+        </button>
       </div>
-      <div v-else-if="userId !== undefined && userId!== '-1' && neighbor_id !== 0">
-        <button type="button" class="btn btn-outline-primary btn-sm" v-on:click="follow">Follow </button> 
+      <div
+        v-else-if="userId !== undefined && userId !== '-1' && neighbor_id !== 0"
+      >
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          v-on:click="follow"
+        >
+          Follow
+        </button>
       </div>
-
     </div>
     <div class="main h-auto">
       <Map v-bind:type_id="type_id" v-bind:neighbor_id="neighbor_id" />
-      <Feed v-bind:type_id="type_id" v-bind:neighbor_id="neighbor_id" />
+      <Feed
+        v-bind:type_id="type_id"
+        v-bind:neighbor_id="neighbor_id"
+        v-bind:neighbor="neighbor"
+      />
     </div>
   </div>
 </template>
@@ -93,6 +117,11 @@ export default {
     Navbar,
     Feed,
   },
+  created: function () {
+    eventBus.$on("changePostDropdown", ({ neighborhood, neighborhoodId }) => {
+      this.changeNeighbor(neighborhood, neighborhoodId);
+    });
+  },
   mounted: function () {
     this.loadFollowing();
     this.loadNeighborhoods();
@@ -100,9 +129,9 @@ export default {
   },
   methods: {
     loadFollowing: function () {
-      if (this.userId !== '') {
+      if (this.userId !== "") {
         axios.get("/api/feeds/user?id=" + this.userId).then((response) => {
-          this.following = response.data.map(id => id.neighborhoodId);
+          this.following = response.data.map((id) => id.neighborhoodId);
         });
       } else {
         this.following = [];
@@ -136,20 +165,28 @@ export default {
     },
 
     follow: function () {
-      if (this.userId !== '' && this.neighbor_id !== 0) {
-        const bodyContent = { userId: this.userId, neighborhoodId: this.neighbor_id };
+      if (this.userId !== "" && this.neighbor_id !== 0) {
+        const bodyContent = {
+          userId: this.userId,
+          neighborhoodId: this.neighbor_id,
+        };
         axios.post("/api/feeds", bodyContent).then(() => {
           this.loadFollowing();
         });
-      } 
+      }
     },
 
     unfollow: function () {
-      if (this.userId !== '' && this.neighbor_id !== 0) {
-        axios.put("/api/feeds", { userId: this.userId, neighborhoodId: this.neighbor_id }).then(() => {
-          this.loadFollowing();
-        });
-      } 
+      if (this.userId !== "" && this.neighbor_id !== 0) {
+        axios
+          .put("/api/feeds", {
+            userId: this.userId,
+            neighborhoodId: this.neighbor_id,
+          })
+          .then(() => {
+            this.loadFollowing();
+          });
+      }
     },
   },
 };

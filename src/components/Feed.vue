@@ -64,7 +64,7 @@
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                {{ postNeighbor }}
+                {{ neighbor === "all" ? "Choose below" : neighbor }}
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a
@@ -123,13 +123,14 @@ export default {
   props: {
     type_id: Number,
     neighbor_id: Number,
+    neighbor: String,
   },
   data() {
     return {
       page: "main",
       types: [],
-      postNeighbor: "Agassiz",
-      postNeighborId: 9,
+      postNeighbor: "",
+      postNeighborId: null,
       neighborhoods: [],
       crimes: [],
       posts: [],
@@ -186,18 +187,10 @@ export default {
         .then((response) => {
           that.posts = [...response.data];
         });
-      // if(this.page == "main") {
-      //   axios.get("/api/crimes?type=" + this.type_id + "&neigh=" + this.neighbor_id).then(response => {
-      //       this.crimes = [...response.data];
-      //   });
-      // } else {
-      //   this.crimes = [];
-      // } 
     },
 
     loadNeighborhoods: function () {
       axios.get("/api/neighborhoods").then((response) => {
-        this.neighborhoods = [{ id: 0, neighborhood: "all" }];
         this.neighborhoods.push(...response.data.all);
       });
     },
@@ -205,6 +198,10 @@ export default {
     selectNeighborhood: function (newNeighbor, id) {
       this.postNeighbor = newNeighbor;
       this.postNeighborId = id;
+      eventBus.$emit("changePostDropdown", {
+        neighborhood: newNeighbor,
+        neighborhoodId: id,
+      });
     },
 
     checkContentNonEmpty: function (content) {
