@@ -176,7 +176,6 @@ export default {
         type: "FeatureCollection",
         features: crimes,
       };
-      // console.log(data);
       let jsonData = JSON.stringify(data);
       L.geoJson(JSON.parse(jsonData), {
         onEachFeature: this.onEachFeature,
@@ -220,7 +219,6 @@ export default {
           });
           Promise.all(promises).then((results) => {
             crimeData = results;
-            // console.log(results);
           });
         });
     },
@@ -263,7 +261,6 @@ export default {
           });
           Promise.all(promises)
             .then((Data) => {
-              // console.log(Data);
               that.crimes = Data;
             })
             .then(() => {

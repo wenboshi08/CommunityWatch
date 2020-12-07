@@ -123,7 +123,6 @@ router.get(
     const loggedInUserId = req.session.uid
     let id = parseInt(req.params.postId, 10);
     let flagged = await Posts.getFlag(loggedInUserId, id);
-    console.log("flag " +  flagged);
     res
       .status(200)
       .json({
@@ -146,7 +145,6 @@ router.get(
   async (req, res) => {
     let id = parseInt(req.params.postId, 10);
     let flagged = await Posts.getAllFlags(id);
-    console.log("flag " +  flagged);
     res
       .status(200)
       .json({

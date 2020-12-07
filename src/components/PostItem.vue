@@ -24,8 +24,11 @@
       <div>
         <h6 class="card-subtitle mt-3 text-muted">{{ post.neighborhood }}</h6>
       </div>
+      <div v-if="isSignedIn">
       <div class="float-right upvote"><DownvotePostIcon v-bind:post="post"/> </div>
       <div class="float-right downvote"><UpvotePostIcon v-bind:post="post"/></div>
+      </div>
+      
     </div>
   </div>
 </template>

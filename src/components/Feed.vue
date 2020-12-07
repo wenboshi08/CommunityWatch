@@ -231,9 +231,8 @@ export default {
         };
         axios
           .post(`/api/posts/new`, bodyContent)
-          .then((res) => {
+          .then(() => {
             eventBus.$emit("create-post-success", true);
-            console.log(res);
             this.reset();
           })
           .catch(() => {
