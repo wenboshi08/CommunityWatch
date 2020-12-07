@@ -24,6 +24,10 @@ const columnNames = {
   postTableUserId: "userId", 
   postTableNeighborhoodId: "neighborhoodId", 
   postTablePostContent: "content",
+  replyTableReplyId: "id", 
+  replyTableUserId: "userId", 
+  replyTablePostId: "postId",
+  replyTableReplyContent: "content",
   upvoteTableUserId: "userId",
   upvoteTablePostId: "postId",
   downvoteTableUserId: "userId",
@@ -42,6 +46,7 @@ function createDb() {
     createCrimeTable();
     createFeedTable();
     createPostTable();
+    createReplyTable(); 
     createUpvoteTable();
     createDownvoteTable();
     createFlagTable();
@@ -109,6 +114,19 @@ function createPostTable() {
     FOREIGN KEY(${columnNames.postTableNeighborhoodId})
     REFERENCES neighborhoods(${columnNames.neighborhoodTableId})
   )`); 
+};
+
+function createReplyTable() {
+  sqlDb.run(`CREATE TABLE IF NOT EXISTS replies (
+    ${columnNames.replyTableReplyId} INTEGER PRIMARY KEY AUTOINCREMENT,
+    ${columnNames.replyTableUserId} INTEGER NOT NULL, 
+    ${columnNames.replyTablePostId} INTEGER NOT NULL, 
+    ${columnNames.replyTableReplyContent} TEXT NOT NULL, 
+    FOREIGN KEY(${columnNames.replyTableUserId})
+    REFERENCES users(${columnNames.userId}),
+    FOREIGN KEY(${columnNames.replyTablePostId})
+    REFERENCES posts(${columnNames.postTablePostId})
+  )`);
 };
 
 function createUpvoteTable() {

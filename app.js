@@ -15,6 +15,7 @@ const neighborhoodsRouter = require('./routes/neighborhoods');
 const crimesRouter = require('./routes/crimes');
 const feedsRouter = require('./routes/feeds');
 const postsRouter = require('./routes/posts');
+const repliesRouter = require('./routes/replies'); 
 const upvotesRouter = require('./routes/upvotes');
 const downvotesRouter = require('./routes/downvotes');
 
@@ -59,6 +60,7 @@ app.use('/api/neighborhoods', neighborhoodsRouter);
 app.use('/api/crimes', crimesRouter);
 app.use('/api/feeds', feedsRouter);
 app.use('/api/posts', postsRouter);
+app.use('/api/replies', repliesRouter); 
 app.use('/api/upvotes', upvotesRouter);
 app.use('/api/downvotes', downvotesRouter);
 // app.use('/api/shorts', shortsRouter);
