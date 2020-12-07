@@ -28,7 +28,7 @@
 import DeletePostIcon from "./DeletePostIcon";
 import FlagPostIcon from "./FlagPostIcon";
 // import axios from "axios";
-// import { eventBus } from "../main";
+import { eventBus } from "../main";
 
 export default {
   name: "PostItem",
@@ -52,6 +52,12 @@ export default {
           if (authenticated) {
             this.isSignedIn = true;
           }
+    eventBus.$on("signout-success", () => {
+          this.$cookie.set('commwatch-auth', '');
+          this.$cookie.set('commwatch-auth-id', '');
+          this.isSignedIn = false;
+
+        });
   },
 
   methods: {

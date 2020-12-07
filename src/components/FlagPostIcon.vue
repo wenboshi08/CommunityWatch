@@ -74,7 +74,10 @@ export default {
         } else {
         this.flagged = true;
       }
-      });  
+      }).catch(() => {
+          // Still sign User out so they have to sign in again.
+          eventBus.$emit('signout-success', true);
+        });  
   },
 
   getAllFlagged: function () {
@@ -87,7 +90,10 @@ export default {
         {
           this.hasFlags = true;
         }
-      });  
+      }).catch(() => {
+          // Still sign User out so they have to sign in again.
+          eventBus.$emit('signout-success', true);
+        });  
   },
 
 },

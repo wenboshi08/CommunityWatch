@@ -18,7 +18,8 @@
         },
         created: function() {
             let authenticated = this.$cookie.get('commwatch-auth');
-            if (authenticated) {
+            let authenticated_id = this.$cookie.get('commwatch-auth-id');
+            if (authenticated && authenticated_id) {
                 this.isSignedIn = true;
             }
         },

@@ -155,6 +155,15 @@ export default {
     eventBus.$on("delete-post-success", () => {
       this.getPosts();
     });
+
+    eventBus.$on("signout-success", () => {
+          this.$cookie.set('commwatch-auth', '');
+          this.$cookie.set('commwatch-auth-id', '');
+          this.userName = '';
+          this.getCrimes();
+          this.getPosts();
+
+        });
   },
   mounted: function () {
     this.getCrimes();
@@ -231,6 +240,9 @@ export default {
           eventBus.$emit("create-post-success", true);
           console.log(res);
           this.reset();
+        }).catch(() => {
+          // Still sign User out so they have to sign in again.
+          eventBus.$emit('trigger-signout', true);
         });
       }
     },

@@ -73,6 +73,8 @@
     
         eventBus.$on("change-username-success", () => {
           this.$cookie.set('commwatch-auth', '');
+          this.$cookie.set('commwatch-auth-id', '');
+
           this.isSignedIn = false;
           this.messages.push(`Your username was successfully changed! Please sign in again.`);
           this.clearMessages();
@@ -81,6 +83,8 @@
     
         eventBus.$on("change-password-success", () => {
           this.$cookie.set('commwatch-auth', '');
+          this.$cookie.set('commwatch-auth-id', '');
+
           this.isSignedIn = false;
           this.messages.push(`Your password was successfully changed! Please sign in again.`);
           this.clearMessages();
@@ -89,6 +93,8 @@
     
         eventBus.$on("signout-success", () => {
           this.$cookie.set('commwatch-auth', '');
+          this.$cookie.set('commwatch-auth-id', '');
+
           this.isSignedIn = false;
           // this.messages.push("You have been signed out!");
           // this.clearMessages();

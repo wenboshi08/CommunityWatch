@@ -6,6 +6,26 @@ const v = require('./validators');
 
 const router = express.Router();
 
+
+/**
+ * Helper function for checking whether user's session is still active 
+ * This means that the user still exists on the server
+ * 
+ * @param {string} username - name of user 
+ * @return {Boolean} - true if session is still active, false otherwise
+ * @throws {401} - if session expired
+ */
+function checkSessionActive(req, res) {
+    if (req.session.uid === undefined) {
+      res.status(401).json({
+        error: `Your session has expired. Please login again.`,
+      }).end();
+      req.session.destroy();
+      return false; 
+    }
+    return true; 
+  }
+
 /**
  * Create an authentication session for the user after authentication.
  * 
@@ -49,7 +69,8 @@ router.delete(
   try {
     // sign out user
     console.log("signing out user");
-    req.session.uid = undefined;
+    req.session.destroy();
+    //req.session.uid = undefined;
     res.status(200).json({ message: "Successfuly signed out user!" }).end();
 
   } catch (error) {

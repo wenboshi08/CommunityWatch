@@ -82,7 +82,7 @@ const ensureUserLoggedIn = function(req, res, next) {
   console.log(` ensure logged in - uid: ${req.session.uid}`);
   console.log(req.session);
 
-  if (!req.session.uid) {
+  if (req.session.uid == undefined) {
     res.status(401).json({ error: "Must be signed in!" }).end();
     return;
   }
