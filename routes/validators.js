@@ -69,7 +69,7 @@ const ensureValidNeighborhoodIdInBody = function(req, res, next) {
 // ------------------------------ AUTH
 
 const ensureUserNotLoggedIn = function(req, res, next) {
-  console.log(`${req.session.uid}`);
+  console.log(`${req.session}`);
   if (req.session.uid) {
     res.status(400).json({ error: "You are signed in!" }).end();
     return;
@@ -78,8 +78,9 @@ const ensureUserNotLoggedIn = function(req, res, next) {
 };
 
 const ensureUserLoggedIn = function(req, res, next) {
-  console.log(`${req.session.uid}`);
-  
+  console.log(` ensure logged in - uid: ${req.session.uid}`);
+  console.log(req.session);
+
   if (!req.session.uid) {
     res.status(401).json({ error: "Must be signed in!" }).end();
     return;

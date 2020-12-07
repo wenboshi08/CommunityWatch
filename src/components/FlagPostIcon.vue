@@ -23,10 +23,10 @@
     />
 
     </div>
-    <div v-if="hasFlags" >
-      <div style="color: red;">Warning: post may contain inappropriate content</div>
+  <!--   <div v-if="hasFlags" >
+      <div style="color: red; font-size: 10pt">Warning: inappropriate content</div>
     </div>
-    
+     -->
   </div>
 </template>
 
@@ -91,7 +91,7 @@ export default {
   },
 
 },
-}
+};
 
 
 </script>

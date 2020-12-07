@@ -5,7 +5,7 @@
         <DeletePostIcon v-bind:post="post" />
 
       </div>
-       <div class="floatright" v-if="isSignedIn">
+       <div class="float-right" v-if="isSignedIn">
         <FlagPostIcon v-bind:post="post"/>
       </div>
         
