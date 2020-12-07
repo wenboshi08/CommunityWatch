@@ -23,10 +23,7 @@
     />
 
     </div>
-  <!--   <div v-if="hasFlags" >
-      <div style="color: red; font-size: 10pt">Warning: inappropriate content</div>
-    </div>
-     -->
+  
   </div>
 </template>
 
@@ -44,14 +41,12 @@ export default {
   data() {
     return {
       flagged : false,
-      hasFlags : false,
     };
   },
 
 
    mounted: function() {
     this.checkIfFlagged();
-    this.getAllFlagged();
   },
 
   methods: {
@@ -60,7 +55,7 @@ export default {
       axios.put(`api/posts/flag/${that.$props.post.postId}`).then((res) => {
         eventBus.$emit("flag-post-success", true);
         this.flagged = res.data.flagged;
-        this.getAllFlagged();
+        
       });
     },
  
@@ -80,21 +75,6 @@ export default {
         });  
   },
 
-  getAllFlagged: function () {
-      let that = this;
-      axios.get(`api/posts/flag/all/${that.$props.post.postId}`).then((res) => {
-        let response = res.data.flagged;
-        if (response == undefined || response.length == 0){
-          this.hasFlags = false;
-        } else
-        {
-          this.hasFlags = true;
-        }
-      }).catch(() => {
-          // Still sign User out so they have to sign in again.
-          eventBus.$emit('signout-success', true);
-        });  
-  },
 
 },
 };
@@ -104,7 +84,7 @@ export default {
 
 <style scoped>
 .flagIcon {
-  opacity: 0.8;
+  opacity: 0.7;
 }
 .flagIcon:hover {
   opacity: 1;

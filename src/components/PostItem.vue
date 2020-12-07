@@ -1,6 +1,8 @@
 <template>
   <div class="card w-100 mt-3">
     <div class="card-body">
+      
+    
       <div class="float-right" v-if="checkIfUserAuthoredPost()">
         <DeletePostIcon v-bind:post="post" />
 
@@ -8,6 +10,9 @@
        <div class="float-right" v-if="isSignedIn">
         <FlagPostIcon v-bind:post="post"/>
       </div>
+        <div v-if="hasFlags" class="warning">
+      <div style="color: red; font-size: 8pt">Warning: this post may contain inappropriate content</div>
+        </div>
         
 
       <div>
@@ -27,7 +32,7 @@
 <script>
 import DeletePostIcon from "./DeletePostIcon";
 import FlagPostIcon from "./FlagPostIcon";
-// import axios from "axios";
+import axios from "axios";
 import { eventBus } from "../main";
 
 export default {
@@ -43,6 +48,7 @@ export default {
   data() {
     return {
       isSignedIn : false,
+      hasFlags : false,
     };
   },
 
@@ -52,10 +58,16 @@ export default {
           if (authenticated) {
             this.isSignedIn = true;
           }
+    this.getAllFlagged();
     eventBus.$on("signout-success", () => {
           this.$cookie.set('commwatch-auth', '');
           this.$cookie.set('commwatch-auth-id', '');
           this.isSignedIn = false;
+
+        });
+
+    eventBus.$on("flag-post-success", () => {
+          this.getAllFlagged();
 
         });
   },
@@ -69,6 +81,30 @@ export default {
         return false;
       }
     },
+
+
+  getAllFlagged: function () {
+      let that = this;
+      axios.get(`api/posts/flag/all/${that.$props.post.postId}`).then((res) => {
+        let response = res.data.flagged;
+        if (response == undefined || response.length == 0){
+          this.hasFlags = false;
+        } else
+        {
+          this.hasFlags = true;
+        }
+      }).catch(() => {
+          // Still sign User out so they have to sign in again.
+          eventBus.$emit('signout-success', true);
+        });  
+  },
   },
 };
 </script>
+
+<style scoped>
+.warning {
+  display: inline-block;
+}
+
+</style>
