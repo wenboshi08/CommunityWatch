@@ -1,9 +1,9 @@
 <template>
   <div>
     <Navbar />
-    <div class="row" style="margin: 20px">
-      <div class="btn-group">
-        Crime Type:
+    <div class="row" style="margin-left: 50px; margin-top:20px">
+      <div class="btn-group" >
+        <span style="margin-right:5px;">Crime Type:</span> 
         <button
           class="btn btn-secondary btn-sm dropdown-toggle"
           type="button"
@@ -11,11 +11,13 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
+          style="margin-left:10px ;margin-right:55px"
+
         >
           {{ type }}
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a
+<div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">          
+  <a
             class="dropdown-item"
             v-for="t in types"
             v-bind:key="t.id"
@@ -26,7 +28,8 @@
       </div>
 
       <div class="btn-group">
-        Neighborhood:
+        <span style="margin-right:5px">Neighborhood:</span> 
+
         <button
           class="btn btn-secondary btn-sm dropdown-toggle"
           type="button"
@@ -34,11 +37,13 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
+          style="margin-left:10px ;margin-right:10px"
+
         >
           {{ neighbor }}
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a
+<div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">          
+  <a
             class="dropdown-item"
             v-for="n in neighborhoods"
             v-bind:key="n.id"
@@ -75,9 +80,18 @@
           Follow
         </button>
       </div>
+
     </div>
+
+    <div class="row" style="margin-left: 50px">
+              <div  style="color: gray; font-size: 9pt,  font-style:italic;">Note: the exact crime addresses have been masked for safety reasons</div>
+
+    </div>
+
+
     <div class="main h-auto">
       <Map v-bind:type_id="type_id" v-bind:neighbor_id="neighbor_id" />
+
       <Feed
         v-bind:type_id="type_id"
         v-bind:neighbor_id="neighbor_id"

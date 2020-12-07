@@ -2,7 +2,7 @@
 
 
   <div :id="'flagIcon' + this.post.postId" class="flagIcon">
-    
+    <div v-if="isSignedIn">
     <div  v-if="flagged">
         <img
       src="../../imgs/redFlagIcon.png"
@@ -23,6 +23,7 @@
     />
 
     </div>
+    </div>
   
   </div>
 </template>
@@ -41,12 +42,27 @@ export default {
   data() {
     return {
       flagged : false,
+      isSignedIn : false,
     };
   },
 
 
    mounted: function() {
     this.checkIfFlagged();
+  },
+
+  created : function() {
+    let authenticated = this.$cookie.get('commwatch-auth');
+          if (authenticated) {
+            this.isSignedIn = true;
+          }
+    eventBus.$on("signout-success", () => {
+          this.$cookie.set('commwatch-auth', '');
+          this.$cookie.set('commwatch-auth-id', '');
+          this.isSignedIn = false;
+
+        });
+
   },
 
   methods: {
