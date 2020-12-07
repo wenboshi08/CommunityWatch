@@ -93,7 +93,7 @@ router.get(
     '/user', [],
     async (req, res) => {
         try {
-            const userId = parseInt(req.query.id);
+            const userId = parseInt(req.query.userId);
             const upvotes = await Upvotes.findByUserId(userId);
             res.status(200).json(upvotes).end();
         } catch (error) {
@@ -138,6 +138,32 @@ router.get(
         try {
             const upvotes = await Upvotes.findAll();
             res.status(200).json(upvotes).end();
+        } catch (error) {
+            res.status(503).json({ error: `Could not find the upvote: ${error}` }).end();
+        }
+    }
+);
+
+/**
+ * GET if one upvote exist in the database
+ * @name GET /api/upvotes/exist?userId= &postId=
+ * return {exist: boolean}
+ * @throws {400}
+ */
+router.get(
+    '/exist',
+    [],
+    async (req, res) => {
+        try {
+            const userId = parseInt(req.query.userId);
+            const postId = parseInt(req.query.postId);
+            const upvote = await Upvotes.findOne(userId, postId);
+            if (!upvote) {
+                res.status(200).json({exist: false}).end();
+            }
+            else {
+                res.status(200).json({exist: true}).end();
+            }
         } catch (error) {
             res.status(503).json({ error: `Could not find the upvote: ${error}` }).end();
         }

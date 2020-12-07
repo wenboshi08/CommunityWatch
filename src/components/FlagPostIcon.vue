@@ -1,6 +1,5 @@
 <template>
 
-
   <div :id="'flagIcon' + this.post.postId" class="flagIcon">
     <div v-if="isSignedIn">
     <div  v-if="flagged">

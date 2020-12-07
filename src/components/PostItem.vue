@@ -24,6 +24,8 @@
       <div>
         <h6 class="card-subtitle mt-3 text-muted">{{ post.neighborhood }}</h6>
       </div>
+      <div class="float-right upvote"><DownvotePostIcon v-bind:post="post"/> </div>
+      <div class="float-right downvote"><UpvotePostIcon v-bind:post="post"/></div>
     </div>
   </div>
 </template>
@@ -32,6 +34,8 @@
 <script>
 import DeletePostIcon from "./DeletePostIcon";
 import FlagPostIcon from "./FlagPostIcon";
+import UpvotePostIcon from "./UpvotePostIcon";
+import DownvotePostIcon from "./DownvotePostIcon";
 import axios from "axios";
 import { eventBus } from "../main";
 
@@ -40,6 +44,8 @@ export default {
   components: {
     DeletePostIcon,
     FlagPostIcon,
+    UpvotePostIcon,
+    DownvotePostIcon,
   },
   props: {
     post: Object,
@@ -63,7 +69,6 @@ export default {
           this.$cookie.set('commwatch-auth', '');
           this.$cookie.set('commwatch-auth-id', '');
           this.isSignedIn = false;
-
         });
 
     eventBus.$on("flag-post-success", () => {
@@ -106,5 +111,13 @@ export default {
 .warning {
   display: inline-block;
 }
+  .upvote {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+  .downvote {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
 
 </style>
