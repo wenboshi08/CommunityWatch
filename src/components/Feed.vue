@@ -129,8 +129,6 @@ export default {
     return {
       page: "main",
       types: [],
-      postNeighbor: "",
-      postNeighborId: null,
       neighborhoods: [],
       crimes: [],
       posts: [],
@@ -157,13 +155,12 @@ export default {
     });
 
     eventBus.$on("signout-success", () => {
-          this.$cookie.set('commwatch-auth', '');
-          this.$cookie.set('commwatch-auth-id', '');
-          this.userName = '';
-          this.getCrimes();
-          this.getPosts();
-
-        });
+      this.$cookie.set("commwatch-auth", "");
+      this.$cookie.set("commwatch-auth-id", "");
+      this.userName = "";
+      this.getCrimes();
+      this.getPosts();
+    });
   },
   mounted: function () {
     this.getCrimes();
@@ -205,8 +202,6 @@ export default {
     },
 
     selectNeighborhood: function (newNeighbor, id) {
-      this.postNeighbor = newNeighbor;
-      this.postNeighborId = id;
       eventBus.$emit("changePostDropdown", {
         neighborhood: newNeighbor,
         neighborhoodId: id,
@@ -223,8 +218,6 @@ export default {
     },
 
     reset: function () {
-      this.postNeighborId = 9;
-      this.postNeighbor = "Agassiz";
       document.getElementById("postContent").value = "";
     },
 
@@ -233,17 +226,20 @@ export default {
       let postContent = document.getElementById("postContent").value;
       if (this.checkContentNonEmpty(postContent)) {
         const bodyContent = {
-          neighborhoodId: that.postNeighborId,
+          neighborhoodId: that.$props.neighbor_id,
           content: postContent,
         };
-        axios.post(`/api/posts/new`, bodyContent).then((res) => {
-          eventBus.$emit("create-post-success", true);
-          console.log(res);
-          this.reset();
-        }).catch(() => {
-          // Still sign User out so they have to sign in again.
-          eventBus.$emit('trigger-signout', true);
-        });
+        axios
+          .post(`/api/posts/new`, bodyContent)
+          .then((res) => {
+            eventBus.$emit("create-post-success", true);
+            console.log(res);
+            this.reset();
+          })
+          .catch(() => {
+            // Still sign User out so they have to sign in again.
+            eventBus.$emit("trigger-signout", true);
+          });
       }
     },
   },
