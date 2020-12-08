@@ -193,6 +193,15 @@ const ensureRepliedByUser = async function(req, res, next) {
   }
 };
 
+const ensureValidNeighborhoodId = async function(req, res, next) {
+  let neighborhood_id = req.body.neighborhoodId; 
+  if (isNaN(neighborhood_id) || neighborhood_id <= 0 || neighborhood_id >= 14) {
+    res.status(400).json({error: "You must post to a valid neighborhood."}).end(); 
+  } else {
+    next(); 
+  }
+}; 
+
 
 
 module.exports = {
@@ -209,6 +218,7 @@ module.exports = {
   ensureRepliedByUser, 
   ensureValidUserIdInBody,
   ensureValidPostIdInBody,
+  ensureValidNeighborhoodId,
 };
 
 

@@ -1,6 +1,7 @@
 <template>
   <div v-if="hasFlags">
     <button
+      style="margin-top: 15px"
       class="btn btn-outline-secondary btn-sm"
       type="button"
       data-toggle="collapse"
@@ -13,14 +14,16 @@
     <div class="collapse" :id="'post' + this.post.postId">
       <div class="card w-100 mt-3">
         <div class="card-body">
-          <div class="float-right" v-if="checkIfUserAuthoredPost()">
-            <DeletePostIcon v-bind:post="post" />
-          </div>
-          <div class="float-right" v-if="isSignedIn">
-            <FlagPostIcon v-bind:post="post" />
-            <div v-if="hasFlags" class="warning">
-              <div style="color: red; font-size: 10pt; font-style: italic">
-                Warning: this post may contain inappropriate content
+          <div class="icon-header">
+            <div class="float-right" v-if="checkIfUserAuthoredPost()">
+              <DeletePostIcon v-bind:post="post" />
+            </div>
+            <div class="float-left" v-if="isSignedIn">
+              <FlagPostIcon v-bind:post="post" />
+              <div v-if="hasFlags" class="warning">
+                <div style="color: red; font-size: 10pt; font-style: italic">
+                  Warning: this post may contain inappropriate content
+                </div>
               </div>
             </div>
           </div>
@@ -57,14 +60,16 @@
   <div v-else>
     <div class="card w-100 mt-3">
       <div class="card-body">
-        <div class="float-right" v-if="checkIfUserAuthoredPost()">
-          <DeletePostIcon v-bind:post="post" />
-        </div>
-        <div class="float-right" v-if="isSignedIn">
-          <FlagPostIcon v-bind:post="post" />
-          <div v-if="hasFlags" class="warning">
-            <div style="color: red; font-size: 10pt; font-style: italic">
-              Warning: this post may contain inappropriate content
+        <div class="icon-header">
+          <div class="float-right" v-if="checkIfUserAuthoredPost()">
+            <DeletePostIcon v-bind:post="post" />
+          </div>
+          <div class="float-left" v-if="isSignedIn">
+            <FlagPostIcon v-bind:post="post" />
+            <div v-if="hasFlags" class="warning">
+              <div style="color: red; font-size: 10pt; font-style: italic">
+                Warning: this post may contain inappropriate content
+              </div>
             </div>
           </div>
         </div>
@@ -177,6 +182,10 @@ export default {
 </script>
 
 <style scoped>
+.icon-header {
+  display: inline-block;
+  width: -webkit-fill-available;
+}
 .warning {
   display: inline-block;
 }
