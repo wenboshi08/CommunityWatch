@@ -8,7 +8,7 @@
         <h5 class="card-title mt-4"> {{crime.crimeType}} </h5>
       </div>
       <div>
-        <h6 class="card-subtitle text-muted"> {{ crime.location }} </h6>
+        <h6 class="card-subtitle text-muted"> {{ crime.location.split(' ').slice(1).join(' ') }} </h6>
       </div>
       <div>
         <h6 class="card-subtitle mt-3 text-muted">{{ crime.neighborhood }}</h6>
