@@ -24,6 +24,7 @@ const columnNames = {
   postTableUserId: "userId", 
   postTableNeighborhoodId: "neighborhoodId", 
   postTablePostContent: "content",
+  postTableTimeStamp: "postTime",
   replyTableReplyId: "id", 
   replyTableUserId: "userId", 
   replyTablePostId: "postId",
@@ -109,6 +110,7 @@ function createPostTable() {
     ${columnNames.postTableUserId} INTEGER NOT NULL, 
     ${columnNames.postTableNeighborhoodId} INTEGER NOT NULL, 
     ${columnNames.postTablePostContent} TEXT NOT NULL, 
+    ${columnNames.postTableTimeStamp} DATETIME NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now', 'localtime')),
     FOREIGN KEY(${columnNames.postTableUserId})
     REFERENCES users(${columnNames.userId}),
     FOREIGN KEY(${columnNames.postTableNeighborhoodId})

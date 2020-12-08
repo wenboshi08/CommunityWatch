@@ -26,7 +26,8 @@ router.get(
       let poster = await Users.getFromID(post.userId); 
       let neighborhood = await Neighborhoods.findOneById(post.neighborhoodId); 
       return ({
-        postId: post.id, 
+        postId: post.id,
+        postTime: post.postTime,
         posterId: post.userId, 
         poster: poster.name,
         postContent: post.content, 

@@ -1,37 +1,96 @@
 <template>
-  <div class="card w-100 mt-3">
-    <div class="card-body">
-      <div class="float-right" v-if="checkIfUserAuthoredPost()">
-        <DeletePostIcon v-bind:post="post" />
-      </div>
-      <div class="float-right" v-if="isSignedIn">
-        <FlagPostIcon v-bind:post="post" />
-      </div>
-      <div v-if="hasFlags" class="warning">
-        <div style="color: red; font-size: 10pt; font-style: italic">
-          Warning: this post may contain inappropriate content
-        </div>
-      </div>
+  <div v-if="hasFlags">
+    <button
+      class="btn btn-outline-secondary btn-sm"
+      type="button"
+      data-toggle="collapse"
+      :data-target="`#${'post' + this.post.postId}`"
+      aria-expanded="false"
+      aria-controls="this.post.postId"
+    >
+      Click to See Hidden Post
+    </button>
+    <div class="collapse" :id="'post' + this.post.postId">
+      <div class="card w-100 mt-3">
+        <div class="card-body">
+          <div class="float-right" v-if="checkIfUserAuthoredPost()">
+            <DeletePostIcon v-bind:post="post" />
+          </div>
+          <div class="float-right" v-if="isSignedIn">
+            <FlagPostIcon v-bind:post="post" />
+            <div v-if="hasFlags" class="warning">
+              <div style="color: red; font-size: 10pt; font-style: italic">
+                Warning: this post may contain inappropriate content
+              </div>
+            </div>
+          </div>
 
-      <div>
-        <h5 class="card-title mt-4">{{ post.poster }}</h5>
-      </div>
-      <div>
-        <h6 class="card-subtitle text-muted">{{ post.postContent }}</h6>
-      </div>
-      <div>
-        <h6 class="card-subtitle mt-3 text-muted">{{ post.neighborhood }}</h6>
-      </div>
-      <br />
-      <div v-if="isSignedIn">
-        <div class="float-right upvote">
-          <DownvotePostIcon v-bind:post="post" />
+          <div>
+            <h5 class="card-title mt-4">{{ post.poster }}</h5>
+          </div>
+          <div>
+            <h6 class="card-subtitle text-muted">{{ post.postContent }}</h6>
+          </div>
+          <div>
+            <h6 class="card-subtitle mt-3 text-muted">
+              {{ post.neighborhood }}
+            </h6>
+          </div>
+          <div>
+            <h6 class="card-subtitle mt-3 text-muted">
+              {{ post.postTime.substring(0, 10) }}
+            </h6>
+          </div>
+          <div v-if="isSignedIn">
+            <div class="float-right upvote">
+              <DownvotePostIcon v-bind:post="post" />
+            </div>
+            <div class="float-right downvote">
+              <UpvotePostIcon v-bind:post="post" />
+            </div>
+            <div class="float-left"><ReplyModal v-bind:post="post" /></div>
+          </div>
         </div>
-        <div class="float-right downvote">
-          <UpvotePostIcon v-bind:post="post" />
+      </div>
+    </div>
+  </div>
+  <div v-else>
+    <div class="card w-100 mt-3">
+      <div class="card-body">
+        <div class="float-right" v-if="checkIfUserAuthoredPost()">
+          <DeletePostIcon v-bind:post="post" />
         </div>
-        <div class="float-left">
-          <ReplyModal v-bind:post="post" />
+        <div class="float-right" v-if="isSignedIn">
+          <FlagPostIcon v-bind:post="post" />
+          <div v-if="hasFlags" class="warning">
+            <div style="color: red; font-size: 10pt; font-style: italic">
+              Warning: this post may contain inappropriate content
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h5 class="card-title mt-4">{{ post.poster }}</h5>
+        </div>
+        <div>
+          <h6 class="card-subtitle text-muted">{{ post.postContent }}</h6>
+        </div>
+        <div>
+          <h6 class="card-subtitle mt-3 text-muted">{{ post.neighborhood }}</h6>
+        </div>
+        <div>
+          <h6 class="card-subtitle mt-3 text-muted">
+            {{ post.postTime.substring(0, 10) }}
+          </h6>
+        </div>
+        <div v-if="isSignedIn">
+          <div class="float-right upvote">
+            <DownvotePostIcon v-bind:post="post" />
+          </div>
+          <div class="float-right downvote">
+            <UpvotePostIcon v-bind:post="post" />
+          </div>
+          <div class="float-left"><ReplyModal v-bind:post="post" /></div>
         </div>
       </div>
     </div>

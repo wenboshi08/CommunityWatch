@@ -2,7 +2,7 @@
   <div class="card w-100 mt-3">
    <div class="card-body">
       <div class="float-right">
-        {{ crime.reportDate }}
+        {{ crime.reportDate.substring(0, 10) }}
       </div>
       <div>
         <h5 class="card-title mt-4"> {{crime.crimeType}} </h5>
