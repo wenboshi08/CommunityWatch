@@ -32,6 +32,8 @@ router.get(
         crimeType: crimeType.crimeType,
         fileNumber: crime.fileNumber,
         location: crime.location,
+        latitude: crime.latitude,
+        longitude: crime.longitude,
         neighborhoodId: crime.neighborhoodId, 
         neighborhood: neighborhood.neighborhood, 
         reportDate: crime.reportDate,
