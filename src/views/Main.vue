@@ -89,13 +89,13 @@
      <div class="btn-group">
         <span style="">Start date: </span>
         <div class="md-form md-outline input-with-post-icon datepicker">
-           <input placeholder="Select date" type="date" id="example" class="form-control">
+           <input placeholder="Select date" type="date" id="example" class="form-control" value="2018-01-01">
         </div>
      </div>
      <div class="btn-group">
         <span style="margin-left:3px">End date: </span>
         <div class="md-form md-outline input-with-post-icon datepicker">
-           <input placeholder="Select date" type="date" id="example" class="form-control">
+           <input placeholder="Select date" type="date" id="example" class="form-control" value="2019-11-19">
         </div>
      </div>
   </div>
