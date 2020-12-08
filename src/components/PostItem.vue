@@ -1,19 +1,17 @@
 <template>
   <div class="card w-100 mt-3">
     <div class="card-body">
-      
-    
       <div class="float-right" v-if="checkIfUserAuthoredPost()">
         <DeletePostIcon v-bind:post="post" />
-
       </div>
-       <div class="float-right" v-if="isSignedIn">
-        <FlagPostIcon v-bind:post="post"/>
+      <div class="float-right" v-if="isSignedIn">
+        <FlagPostIcon v-bind:post="post" />
       </div>
-        <div v-if="hasFlags" class="warning">
-      <div style="color: red; font-size: 10pt; font-style:italic;">Warning: this post may contain inappropriate content</div>
+      <div v-if="hasFlags" class="warning">
+        <div style="color: red; font-size: 10pt; font-style: italic">
+          Warning: this post may contain inappropriate content
         </div>
-        
+      </div>
 
       <div>
         <h5 class="card-title mt-4">{{ post.poster }}</h5>
@@ -24,8 +22,14 @@
       <div>
         <h6 class="card-subtitle mt-3 text-muted">{{ post.neighborhood }}</h6>
       </div>
-      <div class="float-right upvote"><DownvotePostIcon v-bind:post="post"/> </div>
-      <div class="float-right downvote"><UpvotePostIcon v-bind:post="post"/></div>
+      <br />
+      <div class="float-right upvote">
+        <DownvotePostIcon v-bind:post="post" />
+      </div>
+      <div class="float-right downvote">
+        <UpvotePostIcon v-bind:post="post" />
+      </div>
+      <div class="float-left"><CreateReplyModal v-bind:post="post" /></div>
     </div>
   </div>
 </template>
@@ -36,6 +40,7 @@ import DeletePostIcon from "./DeletePostIcon";
 import FlagPostIcon from "./FlagPostIcon";
 import UpvotePostIcon from "./UpvotePostIcon";
 import DownvotePostIcon from "./DownvotePostIcon";
+import CreateReplyModal from "./CreateReplyModal";
 import axios from "axios";
 import { eventBus } from "../main";
 
@@ -46,6 +51,7 @@ export default {
     FlagPostIcon,
     UpvotePostIcon,
     DownvotePostIcon,
+    CreateReplyModal,
   },
   props: {
     post: Object,
@@ -53,28 +59,27 @@ export default {
 
   data() {
     return {
-      isSignedIn : false,
-      hasFlags : false,
+      isSignedIn: false,
+      hasFlags: false,
     };
   },
 
   computed: {},
-  created : function() {
-    let authenticated = this.$cookie.get('commwatch-auth');
-          if (authenticated) {
-            this.isSignedIn = true;
-          }
+  created: function () {
+    let authenticated = this.$cookie.get("commwatch-auth");
+    if (authenticated) {
+      this.isSignedIn = true;
+    }
     this.getAllFlagged();
     eventBus.$on("signout-success", () => {
-          this.$cookie.set('commwatch-auth', '');
-          this.$cookie.set('commwatch-auth-id', '');
-          this.isSignedIn = false;
-        });
+      this.$cookie.set("commwatch-auth", "");
+      this.$cookie.set("commwatch-auth-id", "");
+      this.isSignedIn = false;
+    });
 
     eventBus.$on("flag-post-success", () => {
-          this.getAllFlagged();
-
-        });
+      this.getAllFlagged();
+    });
   },
 
   methods: {
@@ -87,22 +92,23 @@ export default {
       }
     },
 
-
-  getAllFlagged: function () {
+    getAllFlagged: function () {
       let that = this;
-      axios.get(`api/posts/flag/all/${that.$props.post.postId}`).then((res) => {
-        let response = res.data.flagged;
-        if (response == undefined || response.length == 0){
-          this.hasFlags = false;
-        } else
-        {
-          this.hasFlags = true;
-        }
-      }).catch(() => {
+      axios
+        .get(`api/posts/flag/all/${that.$props.post.postId}`)
+        .then((res) => {
+          let response = res.data.flagged;
+          if (response == undefined || response.length == 0) {
+            this.hasFlags = false;
+          } else {
+            this.hasFlags = true;
+          }
+        })
+        .catch(() => {
           // Still sign User out so they have to sign in again.
-          eventBus.$emit('signout-success', true);
-        });  
-  },
+          eventBus.$emit("signout-success", true);
+        });
+    },
   },
 };
 </script>
@@ -111,13 +117,12 @@ export default {
 .warning {
   display: inline-block;
 }
-  .upvote {
-    margin-left: 4px;
-    margin-right: 4px;
-  }
-  .downvote {
-    margin-left: 4px;
-    margin-right: 4px;
-  }
-
+.upvote {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.downvote {
+  margin-left: 4px;
+  margin-right: 4px;
+}
 </style>
