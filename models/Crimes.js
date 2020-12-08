@@ -43,18 +43,18 @@ class Crimes {
    * 
    * @return {Crimes[]}
    */
-  static async getAllCrimes(type, neigh) {
+  static async getAllCrimes(type, neigh, from_, to_) {
     if(type === undefined || type === "0") {
       if(neigh === undefined || neigh === "0") {
-        return db.all(`SELECT * FROM crimes LIMIT 20`);
+        return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableReportDate} BETWEEN '${from_}' AND '${to_}' LIMIT 50`);
       } else {
-        return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableNeighborhoodId} = '${neigh}' LIMIT 20`);
+        return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableReportDate} BETWEEN '${from_}' AND '${to_}' AND ${db.columnNames.crimeTableNeighborhoodId} = '${neigh}' LIMIT 50`);
       }
     } else {
       if(neigh === undefined || neigh === "0") {
-        return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableCrimeTypeId} = '${type}' LIMIT 20`);
+        return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableReportDate} BETWEEN '${from_}' AND '${to_}' AND ${db.columnNames.crimeTableCrimeTypeId} = '${type}' LIMIT 50`);
       } else {
-        return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableCrimeTypeId} = '${type}' AND ${db.columnNames.crimeTableNeighborhoodId} = '${neigh}' LIMIT 20`);
+        return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableReportDate} BETWEEN '${from_}' AND '${to_}' AND ${db.columnNames.crimeTableCrimeTypeId} = '${type}' AND ${db.columnNames.crimeTableNeighborhoodId} = '${neigh}' LIMIT 50`);
       }
     }
   }

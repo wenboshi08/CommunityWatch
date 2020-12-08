@@ -179,7 +179,7 @@ export default {
       let that = await this;
       axios
         .get(
-          `/api/crimes?type=${that.$props.type_id}&neigh=${that.$props.neighbor_id}`
+          `/api/crimes?type=${that.$props.type_id}&neigh=${that.$props.neighbor_id}&from_=2018-01-01&to_=2018-02-16`
         )
         .then((response) => {
           that.crimes = [...response.data];
