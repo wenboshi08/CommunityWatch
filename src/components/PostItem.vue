@@ -9,10 +9,11 @@
       </div>
        <div class="float-right" v-if="isSignedIn">
         <FlagPostIcon v-bind:post="post"/>
-      </div>
         <div v-if="hasFlags" class="warning">
       <div style="color: red; font-size: 10pt; font-style:italic;">Warning: this post may contain inappropriate content</div>
         </div>
+      </div>
+        
         
 
       <div>
