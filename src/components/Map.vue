@@ -108,28 +108,28 @@
             //         }
             //     );
             // },
-            // onEachFeature: (feature, layer) => {
-            //     if (
-            //         feature.properties &&
-            //         feature.properties.crimeType &&
-            //         feature.properties.neighborhood &&
-            //         feature.properties.location
-            //     ) {
-            //         layer.bindPopup(
-            //             feature.properties.neighborhood +
-            //             ", " +
-            //             feature.properties.crimeType +
-            //             ", " +
-            //             feature.properties.location
-            //         );
-            //         layer.on("mouseover", () => {
-            //             layer.openPopup();
-            //         });
-            //         layer.on("mouseout", () => {
-            //             layer.closePopup();
-            //         });
-            //     }
-            // },
+            onEachFeature: (feature, layer) => {
+                if (
+                    feature.properties &&
+                    feature.properties.crimeType &&
+                    feature.properties.neighborhood &&
+                    feature.properties.location
+                ) {
+                    layer.bindPopup(
+                        feature.properties.neighborhood +
+                        ", " +
+                        feature.properties.crimeType +
+                        ", " +
+                        feature.properties.location
+                    );
+                    layer.on("mouseover", () => {
+                        layer.openPopup();
+                    });
+                    layer.on("mouseout", () => {
+                        layer.closePopup();
+                    });
+                }
+            },
             setupLeafletMap: function (crimes) {
                 let mapDiv = this.map;
                 if (mapDiv !== undefined) {
