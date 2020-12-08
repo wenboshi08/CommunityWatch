@@ -22,6 +22,8 @@ router.get(
     let neigh = req.query.neigh;
     let from_ = req.query.from_;
     let to_ = req.query.to_;
+    console.log(from_);
+    console.log(to_);
     let allCrimes = await Crimes.getAllCrimes(type, neigh, from_, to_);
 
     let resolvePromise = async (crime) => {

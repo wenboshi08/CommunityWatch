@@ -89,13 +89,13 @@
      <div class="btn-group">
         <span style="">Start date: </span>
         <div class="md-form md-outline input-with-post-icon datepicker">
-           <input placeholder="Select date" type="date" id="example" class="form-control" value="2018-01-01">
+           <input placeholder="Select date" type="date" id="example" class="form-control" value="2018-01-01" v-model="start" @input="changeStartDate">
         </div>
      </div>
      <div class="btn-group">
         <span style="margin-left:3px">End date: </span>
         <div class="md-form md-outline input-with-post-icon datepicker">
-           <input placeholder="Select date" type="date" id="example" class="form-control" value="2019-11-19">
+           <input placeholder="Select date" type="date" id="example" class="form-control" value="2019-11-19" v-model="end" @input="changeEndDate">
         </div>
      </div>
   </div>
@@ -113,6 +113,8 @@
         v-bind:type_id="type_id"
         v-bind:neighbor_id="neighbor_id"
         v-bind:neighbor="neighbor"
+        v-bind:startdate="start"
+        v-bind:enddate="end"
       />
     </div>
   </div>
@@ -139,6 +141,8 @@ export default {
       neighborhoods: [],
       following: [],
       userId: this.$cookie.get("commwatch-auth-id"),
+      start : "2018-01-01",
+      end: "2019-11-19"
     };
   },
   components: {
@@ -187,6 +191,14 @@ export default {
       this.type = newType;
       this.type_id = id;
       eventBus.$emit("changeType-success", true);
+    },
+
+    changeStartDate: function () {
+      eventBus.$emit("changeStartDate-success", true);
+    },
+
+    changeEndDate: function () {
+      eventBus.$emit("changeEndDate-success", true);
     },
 
     changeNeighbor: function (newNeighbor, id) {

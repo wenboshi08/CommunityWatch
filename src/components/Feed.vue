@@ -124,6 +124,8 @@ export default {
     type_id: Number,
     neighbor_id: Number,
     neighbor: String,
+    startdate: String,
+    enddate : String
   },
   data() {
     return {
@@ -146,13 +148,24 @@ export default {
       this.getPosts();
     });
 
+    eventBus.$on("changeStartDate-success", () => {
+      this.getCrimes();
+      this.getPosts();
+    });
+
+    eventBus.$on("changeEndDate-success", () => {
+      this.getCrimes();
+      this.getPosts();
+    });
+
     eventBus.$on("create-post-success", () => {
       this.getPosts();
     });
 
     eventBus.$on("delete-post-success", () => {
       this.getPosts();
-    });
+    })
+
 
     eventBus.$on("signout-success", () => {
       this.$cookie.set("commwatch-auth", "");
@@ -179,7 +192,7 @@ export default {
       let that = await this;
       axios
         .get(
-          `/api/crimes?type=${that.$props.type_id}&neigh=${that.$props.neighbor_id}&from_=2018-01-01&to_=2018-02-16`
+          `/api/crimes?type=${that.$props.type_id}&neigh=${that.$props.neighbor_id}&from_=${that.$props.startdate}&to_=${that.$props.enddate}`
         )
         .then((response) => {
           that.crimes = [...response.data];
