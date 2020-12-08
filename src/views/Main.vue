@@ -11,7 +11,7 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          style="margin-left:10px ;margin-right:55px"
+          style="margin-left:5px ;margin-right:5px"
 
         >
           {{ type }}
@@ -28,7 +28,7 @@
       </div>
 
       <div class="btn-group">
-        <span style="margin-right:5px">Neighborhood:</span> 
+        <span style="margin-right:3px">Neighborhood:</span> 
 
         <button
           class="btn btn-secondary btn-sm dropdown-toggle"
@@ -37,7 +37,7 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          style="margin-left:10px ;margin-right:10px"
+          style="margin-left:5px ;margin-right:5px"
 
         >
           {{ neighbor }}
@@ -81,10 +81,27 @@
         </button>
       </div>
 
+      
+
     </div>
 
+      <div class="row" style="margin-left: 50px; margin-top:5px">
+     <div class="btn-group">
+        <span style="">Start date: </span>
+        <div class="md-form md-outline input-with-post-icon datepicker">
+           <input placeholder="Select date" type="date" id="example" class="form-control">
+        </div>
+     </div>
+     <div class="btn-group">
+        <span style="margin-left:3px">End date: </span>
+        <div class="md-form md-outline input-with-post-icon datepicker">
+           <input placeholder="Select date" type="date" id="example" class="form-control">
+        </div>
+     </div>
+  </div>
+
     <div class="row" style="margin-left: 50px">
-              <div  style="color: gray; font-size: 9pt,  font-style:italic;">Note: the exact crime addresses have been masked for safety reasons</div>
+              <div  style="color: gray; font-size: 9pt; margin-top: 3px; font-style:italic;">Note: the exact crime addresses have been masked for safety reasons</div>
 
     </div>
 
