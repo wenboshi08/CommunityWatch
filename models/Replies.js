@@ -32,7 +32,7 @@ class Replies {
    * @return {Replies[] | undefined}
    */
   static async findRepliesByPostId(postId) {
-    return db.get(`SELECT * FROM replies WHERE ${db.columnNames.replyTablePostId} == ${postId} ORDER BY id ASC`);
+    return db.all(`SELECT * FROM replies WHERE ${db.columnNames.replyTablePostId} == ${postId} ORDER BY id ASC`);
   }
 
   /**
@@ -42,7 +42,7 @@ class Replies {
    * @return {Replies[]}
    */
   static async getRepliesByUser(userId) {
-    return db.get(`SELECT * FROM replies WHERE ${db.columnNames.replyTableUserId} == ${userId}`); 
+    return db.all(`SELECT * FROM replies WHERE ${db.columnNames.replyTableUserId} == ${userId}`); 
   }
 
   /**

@@ -30,7 +30,7 @@
         <div class="float-right downvote">
           <UpvotePostIcon v-bind:post="post" />
         </div>
-        <div class="float-left"><CreateReplyModal v-bind:post="post" /></div>
+        <div class="float-left"><ReplyModal v-bind:post="post" /></div>
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@ import DeletePostIcon from "./DeletePostIcon";
 import FlagPostIcon from "./FlagPostIcon";
 import UpvotePostIcon from "./UpvotePostIcon";
 import DownvotePostIcon from "./DownvotePostIcon";
-import CreateReplyModal from "./CreateReplyModal";
+import ReplyModal from "./ReplyModal";
 import axios from "axios";
 import { eventBus } from "../main";
 
@@ -53,7 +53,7 @@ export default {
     FlagPostIcon,
     UpvotePostIcon,
     DownvotePostIcon,
-    CreateReplyModal,
+    ReplyModal,
   },
   props: {
     post: Object,

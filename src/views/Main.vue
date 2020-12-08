@@ -1,9 +1,9 @@
 <template>
   <div>
     <Navbar />
-    <div class="row" style="margin-left: 50px; margin-top:20px">
-      <div class="btn-group" >
-        <span style="margin-right:5px;">Crime Type:</span> 
+    <div class="row" style="margin-left: 50px; margin-top: 20px">
+      <div class="btn-group">
+        <span style="margin-right: 5px">Crime Type:</span>
         <button
           class="btn btn-secondary btn-sm dropdown-toggle"
           type="button"
@@ -11,13 +11,15 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          style="margin-left:10px ;margin-right:55px"
-
+          style="margin-left: 10px; margin-right: 55px"
         >
           {{ type }}
         </button>
-<div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">          
-  <a
+        <div
+          class="dropdown-menu pre-scrollable"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <a
             class="dropdown-item"
             v-for="t in types"
             v-bind:key="t.id"
@@ -28,7 +30,7 @@
       </div>
 
       <div class="btn-group">
-        <span style="margin-right:5px">Neighborhood:</span> 
+        <span style="margin-right: 5px">Neighborhood:</span>
 
         <button
           class="btn btn-secondary btn-sm dropdown-toggle"
@@ -37,13 +39,15 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          style="margin-left:10px ;margin-right:10px"
-
+          style="margin-left: 10px; margin-right: 10px"
         >
           {{ neighbor }}
         </button>
-<div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">          
-  <a
+        <div
+          class="dropdown-menu pre-scrollable"
+          aria-labelledby="dropdownMenuButton"
+        >
+          <a
             class="dropdown-item"
             v-for="n in neighborhoods"
             v-bind:key="n.id"
@@ -80,14 +84,13 @@
           Follow
         </button>
       </div>
-
     </div>
 
     <div class="row" style="margin-left: 50px">
-              <div  style="color: gray; font-size: 9pt,  font-style:italic;">Note: the exact crime addresses have been masked for safety reasons</div>
-
+      <div style="color: gray; font-size: 9pt,  font-style:italic;">
+        Note: the exact crime addresses have been masked for safety reasons
+      </div>
     </div>
-
 
     <div class="main h-auto">
       <Map v-bind:type_id="type_id" v-bind:neighbor_id="neighbor_id" />
@@ -97,6 +100,7 @@
         v-bind:neighbor_id="neighbor_id"
         v-bind:neighbor="neighbor"
       />
+      <PostAndReplyModal v-bind:post="modalPost" />
     </div>
   </div>
 </template>
@@ -107,6 +111,7 @@ import NeighborhoodList from "../components/NeighborhoodList.vue";
 import CrimeList from "../components/CrimeList.vue";
 import Navbar from "../components/Navbar.vue";
 import Map from "../components/Map.vue";
+import PostAndReplyModal from "../components/PostAndReplyModal";
 import axios from "axios";
 import { eventBus } from "../main";
 
@@ -122,6 +127,7 @@ export default {
       neighborhoods: [],
       following: [],
       userId: this.$cookie.get("commwatch-auth-id"),
+      modalPost: {},
     };
   },
   components: {
@@ -130,10 +136,16 @@ export default {
     Map,
     Navbar,
     Feed,
+    PostAndReplyModal,
   },
   created: function () {
     eventBus.$on("changePostDropdown", ({ neighborhood, neighborhoodId }) => {
       this.changeNeighbor(neighborhood, neighborhoodId);
+    });
+
+    eventBus.$on("create-reply-success", ({ post }) => {
+      this.modalPost = post;
+      eventBus.$emit("launchModal", true);
     });
   },
   mounted: function () {
