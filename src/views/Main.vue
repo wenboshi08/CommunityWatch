@@ -125,7 +125,11 @@
     </div>
 
     <div class="main h-auto">
-      <Map v-bind:type_id="type_id" v-bind:neighbor_id="neighbor_id" />
+      <Map v-bind:type_id="type_id"
+           v-bind:neighbor_id="neighbor_id"
+           v-bind:neighbor="neighbor"
+           v-bind:startdate="start"
+           v-bind:enddate="end" />
 
       <Feed
         v-bind:type_id="type_id"
