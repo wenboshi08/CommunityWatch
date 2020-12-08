@@ -1,9 +1,9 @@
 <template>
   <div class="card w-100 mt-3" style="background-color: lavender">
     <div class="card-body">
-      <!-- <div class="float-right" v-if="checkIfUserAuthoredPost()">
-        <DeletePostIcon v-bind:post="post" />
-      </div> -->
+      <div class="float-right" v-if="checkIfUserAuthoredReply()">
+        <DeleteReplyIcon v-bind:reply="reply" />
+      </div>
       <div>
         <h5 class="card-title mt-4">{{ reply.replier }}</h5>
       </div>
@@ -16,9 +16,13 @@
 
 
 <script>
+import DeleteReplyIcon from "./DeleteReplyIcon";
+
 export default {
   name: "ReplyItem",
-  components: {},
+  components: {
+    DeleteReplyIcon,
+  },
   props: {
     reply: Object,
   },

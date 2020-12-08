@@ -30,7 +30,9 @@
         <div class="float-right downvote">
           <UpvotePostIcon v-bind:post="post" />
         </div>
-        <div class="float-left"><ReplyModal v-bind:post="post" /></div>
+        <div class="float-left">
+          <ReplyModal v-bind:post="post" />
+        </div>
       </div>
     </div>
   </div>
@@ -83,7 +85,7 @@ export default {
       this.getAllFlagged();
     });
   },
-
+  mounted: function () {},
   methods: {
     checkIfUserAuthoredPost: function () {
       let curr_user = this.$cookie.get("commwatch-auth");

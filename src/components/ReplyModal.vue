@@ -1,10 +1,10 @@
 <template>
   <div class="create-reply-modal">
     <button
-      :id="'replyIcon' + this.post.postId"
+      :id="'replyIcon' + post.postId"
       class="replyIcon"
       data-toggle="modal"
-      data-target="#replyModal"
+      :data-target="'#replyModal-' + post.postId"
     >
       <img
         src="../../imgs/replyIcon.png"
@@ -13,18 +13,27 @@
         class="replyImg"
       />
     </button>
+    <a
+      class="link"
+      :id="'link-' + post.postId"
+      v-if="hasReplies"
+      v-on:click="loadModal"
+      >See Replies</a
+    >
     <div
       class="modal fade"
-      id="replyModal"
+      :id="'replyModal-' + post.postId"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="replyModalLabel"
+      :aria-labelledby="'replyModalLabel-' + post.postId"
       aria-hidden="true"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="replyModalLabel">Post a Reply!</h5>
+            <h5 class="modal-title" :id="'replyModalLabel-' + post.postId">
+              Post a Reply!
+            </h5>
           </div>
           <div class="modal-body">
             <textarea
@@ -71,27 +80,60 @@ export default {
   data() {
     return {
       content: "",
+      hasReplies: false,
     };
+  },
+  created: function () {
+    this.postHasReplies();
+    eventBus.$on("create-reply-success", () => {
+      this.postHasReplies();
+    });
+    eventBus.$on("delete-reply-success", () => {
+      this.postHasReplies();
+    });
   },
   methods: {
     reset: function () {
       this.content = "";
     },
-    addReply: function () {
+    addReply: async function () {
+      let that = await this;
       const bodyContent = {
-        content: this.content,
-        postId: this.$props.post.postId,
+        content: that.content,
+        postId: that.$props.post.postId,
       };
       axios
         .post(`api/replies/new`, bodyContent)
         .then(() => {
-          eventBus.$emit("create-reply-success", { post: this.$props.post });
+          eventBus.$emit("create-reply-success", true);
           this.reset();
+          this.postHasReplies();
         })
         .catch(() => {
           eventBus.$emit("create-reply-success", false);
           this.reset();
+          this.postHasReplies();
         });
+    },
+    postHasReplies: async function () {
+      let that = await this;
+      let replies = [];
+      axios
+        .get(`api/replies/${that.$props.post.postId}`)
+        .then((res) => {
+          replies = [...res.data];
+        })
+        .then(() => {
+          if (replies.length > 0) {
+            this.hasReplies = true;
+          } else {
+            this.hasReplies = false;
+          }
+        });
+    },
+    loadModal: async function () {
+      let that = await this;
+      eventBus.$emit("see-replies-click", { post: that.$props.post });
     },
   },
 };
@@ -126,5 +168,8 @@ export default {
 }
 .rcontent:focus {
   border: 2px solid black !important;
+}
+.link:hover {
+  text-decoration: underline;
 }
 </style>

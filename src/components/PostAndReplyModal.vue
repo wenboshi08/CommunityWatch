@@ -87,6 +87,12 @@ export default {
     eventBus.$on("launchModal", () => {
       this.loadReplies();
     });
+    eventBus.$on("create-reply-success", () => {
+      this.loadReplies();
+    });
+    eventBus.$on("delete-reply-success", () => {
+      this.loadReplies();
+    });
   },
   mounted: function () {},
   methods: {
@@ -110,7 +116,6 @@ export default {
         .get(`api/replies/${that.$props.post.postId}`)
         .then((res) => {
           this.replies = [...res.data];
-          console.log(this.replies);
         })
         .then(() => {
           this.showModal();

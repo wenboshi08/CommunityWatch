@@ -171,7 +171,7 @@ export default {
       this.changeNeighbor(neighborhood, neighborhoodId);
     });
 
-    eventBus.$on("create-reply-success", ({ post }) => {
+    eventBus.$on("see-replies-click", ({ post }) => {
       this.modalPost = post;
       eventBus.$emit("launchModal", true);
     });
