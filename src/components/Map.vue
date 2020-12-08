@@ -198,7 +198,7 @@ export default {
           reportDate: crime.reportDate,
           crimeType: crime.crimeType,
           neighborhood: crime.neighborhood,
-          location: crime.location,
+          location: crime.location.split(' ').slice(1).join(' '),
         },
         geometry: {
           type: "Point",
@@ -250,7 +250,7 @@ export default {
                     reportDate: crime.reportDate,
                     crimeType: crime.crimeType,
                     neighborhood: crime.neighborhood,
-                    location: crime.location,
+                    location: crime.location.split(' ').slice(1).join(' '),
                   },
                   geometry: {
                     type: "Point",
