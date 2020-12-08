@@ -95,7 +95,7 @@
             countUpvotes: function () {
                 axios.get(`api/upvotes/post/${this.post.postId}`)
                     .then((res) => {
-                        this.upvoteCounts = res.data.length
+                        this.upvoteCounts = res.data.length;
                     })
             },
 

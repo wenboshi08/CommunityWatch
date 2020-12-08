@@ -23,13 +23,15 @@
         <h6 class="card-subtitle mt-3 text-muted">{{ post.neighborhood }}</h6>
       </div>
       <br />
-      <div class="float-right upvote">
-        <DownvotePostIcon v-bind:post="post" />
+      <div v-if="isSignedIn">
+        <div class="float-right upvote">
+          <DownvotePostIcon v-bind:post="post" />
+        </div>
+        <div class="float-right downvote">
+          <UpvotePostIcon v-bind:post="post" />
+        </div>
+        <div class="float-left"><CreateReplyModal v-bind:post="post" /></div>
       </div>
-      <div class="float-right downvote">
-        <UpvotePostIcon v-bind:post="post" />
-      </div>
-      <div class="float-left"><CreateReplyModal v-bind:post="post" /></div>
     </div>
   </div>
 </template>
