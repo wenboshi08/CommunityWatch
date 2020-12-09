@@ -11,7 +11,7 @@ GET /api/feeds/neighborhood/:neighborhoodId (get all feeds of a neigh, by id)
 GET /api/feeds                 (Get all feeds)
 GET /api/posts                 (Get all posts)
 POST /api/posts/new            (Post a new post)
-DELETE /api/post//:postId?     (Deletes a post)
+DELETE /api/post/:postId       (Deletes a post)
 POST /api/users/session        (Creates a new session)
 DELETE /api/users/session      (Deletes the session)
 GET /api/users                 (get all users)
@@ -35,6 +35,9 @@ GET /api/downvotes/user           (get all downvotes for a user)
 GET /api/downvotes/post/:postId?  (get all downvotes for post id)
 GET /api/downvotes                (get all downvotes in a db)
 GET /api/downvotes/exist          (get if one downvote exists in the db)
+GET /api/replies/:postId        (get all replies for a post)
+POST /api/replies/new           (create a new reply)
+DELETE /api/replies/:replyId    (delete a reply)
 
 
 
