@@ -5,31 +5,31 @@
         <Account/>
       </div>
       <div v-else>
-      <div class="row" style="margin-left: 50px; margin-top:20px">
-        <div class="btn-group" >
-          <span style="margin-right:5px;">Crime Type:</span> 
-          <button
-            class="btn btn-secondary btn-sm dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            style="margin-left:5px ;margin-right:5px"
+        <div class="row" style="margin-left: 50px; margin-top:20px">
+          <div class="btn-group" >
+            <span style="margin-right:5px;">Crime Type:</span> 
+            <button
+              class="btn btn-secondary btn-sm dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              style="margin-left:5px ;margin-right:5px"
 
-          >
-            {{ type }}
-          </button>
-  <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">          
-    <a
-              class="dropdown-item"
-              v-for="t in types"
-              v-bind:key="t.id"
-              v-on:click="changeType(t.crimeType, t.id)"
-              >{{ t.crimeType }}</a
             >
+              {{ type }}
+            </button>
+            <div class="dropdown-menu pre-scrollable" aria-labelledby="dropdownMenuButton">          
+              <a
+                class="dropdown-item"
+                v-for="t in types"
+                v-bind:key="t.id"
+                v-on:click="changeType(t.crimeType, t.id)"
+                >{{ t.crimeType }}
+              </a>
+            </div>
           </div>
-        </div>
 
         <div class="btn-group">
           <span style="margin-right:3px">Neighborhood:</span> 
@@ -109,7 +109,11 @@
 
 
       <div class="main h-auto">
-        <Map v-bind:type_id="type_id" v-bind:neighbor_id="neighbor_id" />
+        <Map v-bind:type_id="type_id"
+           v-bind:neighbor_id="neighbor_id"
+           v-bind:neighbor="neighbor"
+           v-bind:startdate="start"
+           v-bind:enddate="end" />
 
         <Feed
           v-bind:type_id="type_id"
@@ -120,6 +124,11 @@
           v-bind:navPage="navPage"
           v-bind:following="following"
         />
+
+
+        
+
+        <PostAndReplyModal v-bind:post="modalPost" />
       </div>
     </div>
   </div>
@@ -132,6 +141,7 @@ import CrimeList from "../components/CrimeList.vue";
 import Navbar from "../components/Navbar.vue";
 import Map from "../components/Map.vue";
 import Account from "./Account.vue";
+import PostAndReplyModal from "../components/PostAndReplyModal";
 import axios from "axios";
 import { eventBus } from "../main";
 
@@ -148,9 +158,9 @@ export default {
       neighborhoods: [],
       following: [],
       userId: this.$cookie.get("commwatch-auth-id"),
-      start : "2018-01-01",
+      modalPost: {},
+      start: "2018-01-01",
       end: "2019-11-19",
-      mine: false
     };
   },
   components: {
@@ -160,6 +170,7 @@ export default {
     Navbar,
     Feed,
     Account,
+    PostAndReplyModal,
   },
   created: function () {
     eventBus.$on("changePostDropdown", ({ neighborhood, neighborhoodId }) => {
@@ -173,6 +184,10 @@ export default {
     });
     eventBus.$on("toAcco", () => {
       this.navPage = "account";
+    });
+    eventBus.$on("see-replies-click", ({ post }) => {
+      this.modalPost = post;
+      eventBus.$emit("launchModal", true);
     });
   },
   mounted: function () {

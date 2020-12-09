@@ -91,6 +91,11 @@
             >
               Post
             </button>
+            <div v-if="errorPosting" class="warning">
+              <div style="color: red; font-size: 10pt; font-style: italic">
+                You must post to a valid neighborhood.
+              </div>
+            </div>
           </form>
         </div>
         <br /><br />
@@ -137,6 +142,7 @@ export default {
       crimes: [],
       posts: [],
       userName: this.$cookie.get("commwatch-auth"),
+      errorPosting: false,
     };
   },
   created: function () {
@@ -235,6 +241,7 @@ export default {
     },
 
     selectNeighborhood: function (newNeighbor, id) {
+      this.errorPosting = false;
       eventBus.$emit("changePostDropdown", {
         neighborhood: newNeighbor,
         neighborhoodId: id,
@@ -266,11 +273,14 @@ export default {
           .post(`/api/posts/new`, bodyContent)
           .then(() => {
             eventBus.$emit("create-post-success", true);
+            this.errorPosting = false;
             this.reset();
           })
           .catch(() => {
             // Still sign User out so they have to sign in again.
-            eventBus.$emit("trigger-signout", true);
+            // eventBus.$emit("trigger-signout", true);
+            this.errorPosting = true;
+            this.reset();
           });
       }
     },

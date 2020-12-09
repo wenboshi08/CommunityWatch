@@ -72,7 +72,7 @@ router.get(
  */
 router.post(
   "/new",
-  [v.ensureUserLoggedIn],
+  [v.ensureUserLoggedIn, v.ensureValidNeighborhoodId],
   async (req, res) => {
     const loggedInUserId = req.session.uid
     // let userInfo = await Users.getFromID(loggedInUserId); 
