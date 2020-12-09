@@ -11,7 +11,7 @@ export default {
   beforeCreate: function() {
     let authenticated = this.$cookie.get('commwatch-auth');
     if (!authenticated) {
-      this.$router.push("account");
+      this.$router.push("/");
     }
   }
 };

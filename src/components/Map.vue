@@ -73,7 +73,6 @@ export default {
     this.getFollowedNeighborhoods();
     // this.getCrimes();
   },
-
   methods: {
     getCrimes: async function () {
       let that = await this;

@@ -60,6 +60,19 @@ class Crimes {
   }
 
   /**
+   * Return an array of all of the crimes.
+   * 
+   * @return {Crimes[]}
+   */
+  static async getMyCrimes(type, neigh, from_, to_) {
+    if(type === undefined || type === "0") {
+      return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableReportDate} BETWEEN '${from_}' AND '${to_}' AND ${db.columnNames.crimeTableNeighborhoodId} in ${neigh} LIMIT 50`);
+    } else {
+      return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableReportDate} BETWEEN '${from_}' AND '${to_}' AND ${db.columnNames.crimeTableCrimeTypeId} = '${type}' AND ${db.columnNames.crimeTableNeighborhoodId} in ${neigh} LIMIT 50`);
+    }
+  }
+
+  /**
    * Find a Crime by neighborhoods
    * 
    * @param {Integer[]} neighborhoodIds - id of neighborhoods to find
