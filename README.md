@@ -57,13 +57,20 @@ Navigate to `localhost:8080` in your browser
     * components/UserProfile.vue
     * components/UserSettings.vue
     * views/Account.vue
+    * components/FlagPostIcon.vue
+    * components/PostItem.vue (small changes)
+    * components/Feed.vue (small changes)
+    * views/Main.vue (small changes, date filter)
+    * other minor changes, bug fixes etc
   * models:
     * Neighborhoods.js
     * Users.js
+    * Posts.js (flag related content)
   * routes:
     * neighborhoods.js
     * users.js
     * session.js
+    * posts.js (flag-related content)
 
 * **Wenbo Shi**:
   * populateDB
