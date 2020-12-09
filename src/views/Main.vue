@@ -144,6 +144,8 @@
           v-bind:startdate="start"
           v-bind:enddate="end"
           v-bind:userId="userId"
+          v-bind:navPage="navPage"
+          v-bind:following="following"
         />
         <Feed
           v-bind:type_id="type_id"

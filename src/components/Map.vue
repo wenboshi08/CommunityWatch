@@ -32,6 +32,8 @@
             neighbor: String,
             startdate: String,
             enddate : String,
+            navPage : String,
+            following: Array[Number],
         },
         data() {
             return {
@@ -58,17 +60,28 @@
             eventBus.$on("changeEndDate-success", () => {
                 this.getCrimes();
             });
+            eventBus.$on("toMain", () => {
+                this.getCrimes();
+            });
+
+                eventBus.$on("toMine", () => {
+                this.getCrimes(true);
+            });
         },
         mounted: function () {
             this.getCrimes();
         },
 
         methods: {
-            getCrimes: async function () {
+            getCrimes: async function (my_own=false) {
                 let that = await this;
-                axios
-                    .get(
-                        `/api/crimes?type=${that.$props.type_id}&neigh=${that.$props.neighbor_id}&from_=${that.$props.startdate}&to_=${that.$props.enddate}`
+                console.log("map populated soon");
+                if(my_own|| that.navPage === "neigh") {
+                    console.log("mine");
+                    const bodyContent = {neigh: that.following};
+                    axios
+                    .put(
+                        `/api/crimes/mine?type=${that.$props.type_id}&from_=${that.$props.startdate}&to_=${that.$props.enddate}`, bodyContent
                     )
                     .then((response) => {
                         const crimes = response.data;
@@ -90,11 +103,43 @@
                                   },
                                 }
                         })
-                }).then((processedCrimes) => {
-                    that.crimes = processedCrimes;
-                }).then(() => {
-                    that.setupLeafletMap(that.crimes);
-                });
+                    }).then((processedCrimes) => {
+                        that.crimes = processedCrimes;
+                    }).then(() => {
+                        that.setupLeafletMap(that.crimes);
+                    });
+                } else {
+                    console.log("other");
+                    axios
+                        .get(
+                            `/api/crimes?type=${that.$props.type_id}&neigh=${that.$props.neighbor_id}&from_=${that.$props.startdate}&to_=${that.$props.enddate}`
+                        )
+                        .then((response) => {
+                            const crimes = response.data;
+                            return crimes;
+                        }).then((crimes) => {
+                            return crimes.map((crime) => {
+                                return {
+                                    type: "Feature",
+                                    properties: {
+                                        fileNumber: crime.fileNumber,
+                                        reportDate: crime.reportDate,
+                                        crimeType: crime.crimeType,
+                                        neighborhood: crime.neighborhood,
+                                        location: crime.location.split(' ').slice(1).join(' '),
+                                    },
+                                    geometry: {
+                                        type: "Point",
+                                        coordinates: [crime.longitude, crime.latitude],
+                                    },
+                                    }
+                            })
+                    }).then((processedCrimes) => {
+                        that.crimes = processedCrimes;
+                    }).then(() => {
+                        that.setupLeafletMap(that.crimes);
+                    });
+                }
             },
 
             // geoCodeAddress: async (location, fn) => {
