@@ -10,16 +10,6 @@ export default new Router({
       path: '/',
       name: 'Main',
       component: () => import('./views/Main.vue')
-    },
-    {
-      path: '/account',
-      name: 'account',
-      component: () => import('./views/Account.vue')
-    },
-    {
-      path: '/myneighborhood',
-      name: 'MyNeighborhood',
-      component: () => import('./views/MyNeighborhood.vue')
     }
   ]
 })

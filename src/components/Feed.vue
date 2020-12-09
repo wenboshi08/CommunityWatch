@@ -125,7 +125,9 @@ export default {
     neighbor_id: Number,
     neighbor: String,
     startdate: String,
-    enddate : String
+    enddate : String,
+    navPage : String,
+    following: Array[Number],
   },
   data() {
     return {
@@ -164,8 +166,15 @@ export default {
 
     eventBus.$on("delete-post-success", () => {
       this.getPosts();
-    })
+    });
 
+    eventBus.$on("toMain", () => {
+      this.getCrimes();
+    });
+
+    eventBus.$on("toMine", () => {
+      this.getCrimes(true);
+    });
 
     eventBus.$on("signout-success", () => {
       this.$cookie.set("commwatch-auth", "");
@@ -188,15 +197,26 @@ export default {
       }
     },
 
-    getCrimes: async function () {
+    getCrimes: async function (my_own=false) {
       let that = await this;
-      axios
-        .get(
-          `/api/crimes?type=${that.$props.type_id}&neigh=${that.$props.neighbor_id}&from_=${that.$props.startdate}&to_=${that.$props.enddate}`
-        )
-        .then((response) => {
-          that.crimes = [...response.data];
-        });
+      if(my_own|| that.navPage === "neigh") {
+        const bodyContent = {neigh: that.following};
+        axios
+          .put(
+            `/api/crimes/mine?type=${that.$props.type_id}&from_=${that.$props.startdate}&to_=${that.$props.enddate}`, bodyContent
+          )
+          .then((response) => {
+            that.crimes = [...response.data];
+          });
+      } else {
+        axios
+          .get(
+            `/api/crimes?type=${that.$props.type_id}&neigh=${that.$props.neighbor_id}&from_=${that.$props.startdate}&to_=${that.$props.enddate}`
+          )
+          .then((response) => {
+            that.crimes = [...response.data];
+          });
+      }
     },
 
     getPosts: async function () {

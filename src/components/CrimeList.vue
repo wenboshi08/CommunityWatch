@@ -123,11 +123,9 @@ export default {
           (c) => c.crimeType === this.crimeFilterVal
         );
       } else if (this.neighborhoodFilterVal !== "All") {
-        console.log(this.neighborhoodFilterVal);
         this.crimes = this.crimes.filter(
           (c) => c.neighborhood === this.neighborhoodFilterVal
         );
-        console.log(this.crimes);
       } else {
         this.loadCrimes();
       }

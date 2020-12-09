@@ -50,6 +50,52 @@ router.get(
 });
 
 /**
+ * List all neighborhoods.
+ * 
+ * @name GET /api/crime
+ * @return {Crimes[]} - list of all crimes
+ */
+router.put(
+  '/mine', 
+  [],
+  async (req, res) => {
+  try {    
+    // fetch all the crimes from our DB
+    let neigh_list = req.body.neigh;
+    let neigh = "(";
+    neigh_list.forEach(n => neigh = neigh + n + ",");
+    neigh = neigh.slice(0, -1) + ")";
+    let type = req.query.type;
+    let from_ = req.query.from_;
+    let to_ = req.query.to_;
+    let allCrimes = await Crimes.getMyCrimes(type, neigh, from_, to_);
+
+    let resolvePromise = async (crime) => {
+      let crimeType = await Crimes.findCrimeTypeById(crime.crimeTypeId); 
+      let neighborhood = await Neighborhoods.findOneById(crime.neighborhoodId); 
+      return ({
+        crimeTypeId: crime.crimeTypeId, 
+        crimeType: crimeType.crimeType,
+        fileNumber: crime.fileNumber,
+        location: crime.location,
+        neighborhoodId: crime.neighborhoodId, 
+        neighborhood: neighborhood.neighborhood, 
+        reportDate: crime.reportDate,
+      });
+    }
+
+    let promises = allCrimes.map((crime) => {
+      return resolvePromise(crime); 
+    }); 
+    Promise.all(promises).then((results) => {
+      res.status(200).json(results).end();
+    })
+  } catch (error) {
+    res.status(503).json({ error: `Could not fetch all crimes: ${error}` }).end();
+  }
+});
+
+/**
  * List all crimeTypes.
  * 
  * @name GET /api/crimes/types
