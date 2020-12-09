@@ -5,6 +5,7 @@
       <Account />
     </div>
     <div v-else>
+      <div class="row" style="margin-left: 50px; margin-top: 20px; font-size:20pt">{{title}}</div>
       <div class="row" style="margin-left: 50px; margin-top: 20px">
         <div class="btn-group">
           <span style="margin-right: 5px">Crime Type:</span>
@@ -188,6 +189,7 @@ export default {
       modalPost: {},
       start: "2018-01-01",
       end: "2019-11-19",
+      title : "Community Watch Homepage",
     };
   },
   components: {
@@ -205,9 +207,11 @@ export default {
     });
     eventBus.$on("toMain", () => {
       this.navPage = "main";
+      this.title = "Community Watch Homepage";
     });
     eventBus.$on("toMine", () => {
       this.navPage = "neigh";
+      this.title = "My neighborhoods";
     });
     eventBus.$on("toAcco", () => {
       this.navPage = "account";
