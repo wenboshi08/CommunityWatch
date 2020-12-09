@@ -132,13 +132,13 @@
             },
             setupLeafletMap: function (crimes) {
                 let mapDiv = this.map;
-                var container = L.DomUtil.get('map-container');
-                  if(container != null){
-                  container._leaflet_id = null;
-                  }
-                // if (mapDiv !== undefined && mapDiv !== null) {
-                //     mapDiv.remove();
-                // }
+                // var container = L.DomUtil.get('map-container');
+                //   if(container != null){
+                //   container._leaflet_id = null;
+                //   }
+                if (mapDiv !== undefined && mapDiv !== null) {
+                    mapDiv.remove();
+                }
                 mapDiv = L.map("map-container").setView(
                     [42.37369292702129, -71.11050691418987],
                     13
