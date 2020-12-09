@@ -10,7 +10,7 @@
           >Crimes</a
         >
       </li>
-      <li class="nav-item">
+      <li v-if="navPage === 'main'" class="nav-item">
         <a class="nav-link" v-on:click="changePage('post')" data-toggle="tab"
           >Post</a
         >

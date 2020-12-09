@@ -34,7 +34,7 @@
           </div>
         </div>
 
-        <div class="btn-group">
+        <div v-if="navPage === 'main'" class="btn-group">
           <span style="margin-right: 3px">Neighborhood:</span>
 
           <button
@@ -64,6 +64,7 @@
 
         <div
           v-if="
+            navPage === 'main' &&
             userId !== undefined &&
             userId !== '-1' &&
             neighbor_id !== 0 &&
@@ -80,7 +81,7 @@
         </div>
         <div
           v-else-if="
-            userId !== undefined && userId !== '-1' && neighbor_id !== 0
+            navPage === 'main' && userId !== undefined && userId !== '-1' && neighbor_id !== 0
           "
         >
           <button
