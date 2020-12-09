@@ -15,6 +15,7 @@
           >Post</a
         >
       </li>
+      <li v-else class="nav-item"></li>
     </ul>
     <!-- HEADERS -->
     <div v-if="page === 'main'">
@@ -130,8 +131,8 @@ export default {
     neighbor_id: Number,
     neighbor: String,
     startdate: String,
-    enddate : String,
-    navPage : String,
+    enddate: String,
+    navPage: String,
     following: Array[Number],
   },
   data() {
@@ -203,13 +204,14 @@ export default {
       }
     },
 
-    getCrimes: async function (my_own=false) {
+    getCrimes: async function (my_own = false) {
       let that = await this;
-      if(my_own|| that.navPage === "neigh") {
-        const bodyContent = {neigh: that.following};
+      if (my_own || that.navPage === "neigh") {
+        const bodyContent = { neigh: that.following };
         axios
           .put(
-            `/api/crimes/mine?type=${that.$props.type_id}&from_=${that.$props.startdate}&to_=${that.$props.enddate}`, bodyContent
+            `/api/crimes/mine?type=${that.$props.type_id}&from_=${that.$props.startdate}&to_=${that.$props.enddate}`,
+            bodyContent
           )
           .then((response) => {
             that.crimes = [...response.data];

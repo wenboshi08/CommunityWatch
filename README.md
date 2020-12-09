@@ -57,27 +57,43 @@ Navigate to `localhost:8080` in your browser
     * components/UserProfile.vue
     * components/UserSettings.vue
     * views/Account.vue
+    * components/FlagPostIcon.vue
+    * components/PostItem.vue (small changes)
+    * components/Feed.vue (small changes)
+    * views/Main.vue (small changes, date filter)
+    * other minor changes, bug fixes etc
   * models:
     * Neighborhoods.js
     * Users.js
+    * Posts.js (flag related content)
   * routes:
     * neighborhoods.js
     * users.js
     * session.js
+    * posts.js (flag-related content)
 
 * **Wenbo Shi**:
   * populateDB
+    * addcoordinate.py
     * postdata.py
   * db
     * db_config.js
   * models
     * Feeds.js
+    * Downvotes.js
+    * Upvotes.js
   * routes
     * feeds.js
+    * downvotes.js
+    * upvotes.js
+    * minor part of crimes.js
   * src
     * part of components/Map.vue
     * minor part of components/Navbar.vue
     * views/MyNeighborhood.vue
+    * components/UpvotePostIcon.vue
+    * components/DownvotePostIcon.vue
+    * part of components/PostItem.vue
 
 * **Stuti Vishwabhan**:
   * src
@@ -88,13 +104,20 @@ Navigate to `localhost:8080` in your browser
     * components/Feed.vue
     * components/PostItem.vue
     * components/DeletePostIcon.vue
+    * components/DeleteReplyIcon.vue
+    * components/PostAndReplyModal.vue
+    * components/ReplyItem.vue
+    * components/ReplyModal.vue
   * db:
     * db_config.js
   * models: 
     * Posts.js
+    * Replies.js
   * routes:
     * crimes.js
     * posts.js
+    * replies.js
+    * validators.js
     
 * **Fernando Herrera**:
   * src
