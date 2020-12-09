@@ -125,11 +125,14 @@
     </div>
 
     <div class="main h-auto">
-      <Map v-bind:type_id="type_id"
-           v-bind:neighbor_id="neighbor_id"
-           v-bind:neighbor="neighbor"
-           v-bind:startdate="start"
-           v-bind:enddate="end" />
+      <Map
+        v-bind:type_id="type_id"
+        v-bind:neighbor_id="neighbor_id"
+        v-bind:neighbor="neighbor"
+        v-bind:startdate="start"
+        v-bind:enddate="end"
+        v-bind:userId="userId"
+      />
 
       <Feed
         v-bind:type_id="type_id"
@@ -246,6 +249,7 @@ export default {
         };
         axios.post("/api/feeds", bodyContent).then(() => {
           this.loadFollowing();
+          eventBus.$emit("follow-neighbor-succes", true);
         });
       }
     },
@@ -259,6 +263,7 @@ export default {
           })
           .then(() => {
             this.loadFollowing();
+            eventBus.$emit("unfollow-neighbor-succes", true);
           });
       }
     },
