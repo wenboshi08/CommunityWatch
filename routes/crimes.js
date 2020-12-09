@@ -67,10 +67,16 @@ router.put(
     let neigh = "(";
     neigh_list.forEach(n => neigh = neigh + n + ",");
     neigh = neigh.slice(0, -1) + ")";
+
+    if(neigh === ")"){
+      return res.status(200).json([]).end();
+    }
+
     let type = req.query.type;
     let from_ = req.query.from_;
     let to_ = req.query.to_;
     let allCrimes = await Crimes.getMyCrimes(type, neigh, from_, to_);
+    console.log(allCrimes);
 
     let resolvePromise = async (crime) => {
       let crimeType = await Crimes.findCrimeTypeById(crime.crimeTypeId); 
@@ -80,6 +86,8 @@ router.put(
         crimeType: crimeType.crimeType,
         fileNumber: crime.fileNumber,
         location: crime.location,
+        latitude: crime.latitude,
+        longitude: crime.longitude,
         neighborhoodId: crime.neighborhoodId, 
         neighborhood: neighborhood.neighborhood, 
         reportDate: crime.reportDate,

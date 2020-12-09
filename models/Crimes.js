@@ -65,6 +65,8 @@ class Crimes {
    * @return {Crimes[]}
    */
   static async getMyCrimes(type, neigh, from_, to_) {
+    console.log("SQL");
+    console.log(neigh);
     if(type === undefined || type === "0") {
       return db.all(`SELECT * FROM crimes WHERE ${db.columnNames.crimeTableReportDate} BETWEEN '${from_}' AND '${to_}' AND ${db.columnNames.crimeTableNeighborhoodId} in ${neigh} LIMIT 50`);
     } else {
