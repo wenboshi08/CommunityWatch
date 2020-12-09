@@ -274,7 +274,6 @@ export default {
     },
 
     follow: function () {
-      console.log("in follow");
       if (this.userId !== "" && this.neighbor_id !== 0) {
         const bodyContent = {
           userId: this.userId,

@@ -88,9 +88,7 @@ import { eventBus } from "../main";
   methods: {
     getCrimes: async function () {
       let that = await this;
-      console.log("populating map");
       if(that.navPage === "neigh") {
-        console.log("my own ");
         const bodyContent = {neigh: that.$props.following};
         axios
         .put(
@@ -101,7 +99,6 @@ import { eventBus } from "../main";
         })
         .then((crimes) => {
           return crimes.map((crime) => {
-              console.log(crime);
             return {
               type: "Feature",
               properties: {
@@ -120,13 +117,11 @@ import { eventBus } from "../main";
         })
         .then((processedCrimes) => {
           that.crimes = processedCrimes;
-          console.log(that.crimes);
         })
         .then(() => {
           that.setupLeafletMap(that.crimes);
         });
       } else {
-          console.log("all ");
         axios
             .get(
             `/api/crimes?type=${that.$props.type_id}&neigh=${that.$props.neighbor_id}&from_=${that.$props.startdate}&to_=${that.$props.enddate}`
@@ -156,7 +151,6 @@ import { eventBus } from "../main";
             })
             .then((processedCrimes) => {
             that.crimes = processedCrimes;
-            console.log(that.crimes);
             })
             .then(() => {
             that.setupLeafletMap(that.crimes);

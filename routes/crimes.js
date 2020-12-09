@@ -76,7 +76,6 @@ router.put(
     let from_ = req.query.from_;
     let to_ = req.query.to_;
     let allCrimes = await Crimes.getMyCrimes(type, neigh, from_, to_);
-    console.log(allCrimes);
 
     let resolvePromise = async (crime) => {
       let crimeType = await Crimes.findCrimeTypeById(crime.crimeTypeId); 
