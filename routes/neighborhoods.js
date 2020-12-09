@@ -35,14 +35,14 @@ router.get(
  * @throws {404} - if neighborhood does not exist
  */
 router.get(
-  '/:id', 
+  '/:neighborhoodId', 
   [
-    v.ensureValidNeighborhoodIdInBody,
+    v.ensureValidNeighborhoodIdInParams,
   ],
   async (req, res) => {
   try {
 
-    const neighborhoodId = req.params.id;
+    const neighborhoodId = req.params.neighborhoodId;
 
     // ensure that the given neighborhood exists in our DB
     const neighborhood = await Neighborhoods.findOneById(neighborhoodId);

@@ -9,8 +9,8 @@
             </b-navbar-item>
         </template>
         <template slot="start">
-            <b-navbar-item tag="router-link" :to="{path: '/'}"><b>Community Watch</b></b-navbar-item>
-            <b-navbar-item tag="router-link" :to="{path: '/myneighborhood'}"><b>My Neighborhood</b></b-navbar-item>
+            <b-navbar-item v-on:click="toMain" href="#"><b>Community Watch</b></b-navbar-item>
+            <b-navbar-item v-on:click="toMine" href="#"><b>My Neighborhood</b></b-navbar-item>
         </template>
         <template slot="end">
             <div v-if="isSignedIn">
@@ -18,7 +18,7 @@
                 <div style="text-align: center; font-size: 1.1em; padding: 25px"> Signed in as <i>{{this.$cookie.get('commwatch-auth')}} </i></div>
             </div>
             </div>
-            <b-navbar-item tag="router-link" :to="{ path: '/account' }">
+            <b-navbar-item v-on:click="toAccount" href="#">
                 <font-awesome-icon 
                     icon="user" 
                     size="2x" >
@@ -46,7 +46,18 @@ import { eventBus } from "../main";
           eventBus.$on('signin-success', () => {this.isSignedIn=true});
           eventBus.$on('signout-success', () => {this.isSignedIn=false});
           eventBus.$on('deleteuser-success', () => {this.isSignedIn=false});
-  }
+      },
+      methods: {
+        toMain: function () {
+          eventBus.$emit('toMain');  
+        },
+        toMine: function () {
+          eventBus.$emit('toMine');
+        },
+        toAccount: function () {
+          eventBus.$emit('toAcco');
+        },
+      }
     };
 </script>
 <style scoped>

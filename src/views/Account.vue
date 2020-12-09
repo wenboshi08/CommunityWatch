@@ -1,7 +1,5 @@
 <template>
   <div>
-	<Navbar/>
-
 	<UserSettings/>
   </div>
 </template>
