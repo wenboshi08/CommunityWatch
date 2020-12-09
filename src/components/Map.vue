@@ -181,7 +181,7 @@ import { eventBus } from "../main";
     },
     setupLeafletMap: async function (crimes) {
       let mapDiv = this.map;
-      if (mapDiv !== undefined && mapDiv !== null) {
+      if (mapDiv !== undefined) {
         mapDiv.remove();
       }
       mapDiv = L.map("map-container").setView(
