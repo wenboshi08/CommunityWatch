@@ -104,13 +104,20 @@ Navigate to `localhost:8080` in your browser
     * components/Feed.vue
     * components/PostItem.vue
     * components/DeletePostIcon.vue
+    * components/DeleteReplyIcon.vue
+    * components/PostAndReplyModal.vue
+    * components/ReplyItem.vue
+    * components/ReplyModal.vue
   * db:
     * db_config.js
   * models: 
     * Posts.js
+    * Replies.js
   * routes:
     * crimes.js
     * posts.js
+    * replies.js
+    * validators.js
     
 * **Fernando Herrera**:
   * src
